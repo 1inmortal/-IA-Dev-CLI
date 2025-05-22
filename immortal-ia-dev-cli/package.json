@@ -1,0 +1,22 @@
+{
+  "name": "immortal-ia-dev-cli",
+  "version": "1.0.0",
+  "description": "Tu asistente de desarrollo por consola con IA",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@google/generative-ai": "^0.11.0",
+    "boxen": "^5.1.2",
+    "chalk": "^4.1.2",
+    "dotenv": "^16.4.5",
+    "figlet": "^1.7.0",
+    "inquirer": "^8.0.0",
+    "ora": "^5.4.1"
+  }
+}
