@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immortal IA Dev CLI - Tu Asistente de Desarrollo Definitivo</title>
+
+    <!-- Google Fonts: Futuristic & Code Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        /*
+        * =======================================
+        *       CSS GENERAL & VARIABLES
+        * =======================================
+        */
+        :root {
+            --bg-dark: #0d0d1a; /* Fondo muy oscuro, casi negro */
+            --primary-glow: #00ff66; /* Verde neón (código, acentos) */
+            --secondary-glow: #00e0ff; /* Cian neón (títulos, interacciones) */
+            --accent-purple: #8e2de2; /* Púrpura brillante */
+            --accent-pink: #c700ff; /* Rosa eléctrico */
+            --text-light: #e0e0e0; /* Texto claro legible */
+            --text-muted: #a0a0a0; /* Texto secundario */
+            --border-color: rgba(0, 224, 255, 0.3); /* Bordes sutiles */
+            --terminal-bg: rgba(0, 0, 0, 0.8); /* Fondo de la terminal */
+            --shadow-strength: 0 0 15px rgba(0, 224, 255, 0.5), 0 0 30px rgba(142, 45, 226, 0.3);
+            --transition-speed: 0.4s ease-in-out;
+            --pixel-size: 2px;
+        }
+
+        /* Base & Resets */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace; /* Fuente más legible para código */
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.8;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh; /* Asegura que el footer se vea bien */
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #2b2b40;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-glow);
+            border-radius: 10px;
+            box-shadow: 0 0 5px var(--primary-glow);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-glow);
+            box-shadow: 0 0 8px var(--secondary-glow);
+        }
+
+        /* Global Text & Links */
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif; /* Títulos con fuente futurista */
+            color: var(--secondary-glow);
+            text-shadow: 0 0 10px rgba(0, 224, 255, 0.8);
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        h1 { font-size: clamp(3em, 6vw, 5.5em); }
+        h2 { font-size: clamp(2em, 4.5vw, 3.5em); }
+        h3 { font-size: clamp(1.5em, 3vw, 2.5em); }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 1.05em;
+        }
+
+        a {
+            color: var(--primary-glow);
+            text-decoration: none;
+            transition: color var(--transition-speed), text-shadow var(--transition-speed);
+        }
+
+        a:hover {
+            color: var(--secondary-glow);
+            text-shadow: 0 0 8px var(--secondary-glow);
+        }
+
+        /* Utility classes */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
+            color: var(--text-light);
+            padding: 18px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            box-shadow: var(--shadow-strength);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--secondary-glow), 0 0 40px var(--accent-purple);
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+        }
+
+        .btn::before { /* Ripple effect */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
+        }
+
+        .btn:active::before {
+            width: 200%;
+            height: 200%;
+            opacity: 1;
+        }
+
+        /* Animated Background Pattern (Optional: for entire body or specific sections) */
+        .background-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(to right, rgba(0,224,255,0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,224,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.1;
+            animation: grid-scroll 200s linear infinite;
+        }
+
+        @keyframes grid-scroll {
+            from { background-position: 0 0; }
+            to { background-position: -4000px -4000px; }
+        }
+
+        /*
+        * =======================================
+        *        NAVBAR
+        * =======================================
+        */
+        #navbar {
+            background-color: rgba(10, 10, 20, 0.95);
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            text-align: center;
+            backdrop-filter: blur(5px); /* Efecto cristal */
+        }
+
+        #navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        #navbar .logo {
+            font-family: 'Press Start 2P', cursive; /* Fuente retro para el logo */
+            color: var(--primary-glow);
+            font-size: 1.5em;
+            text-shadow: 0 0 5px var(--primary-glow);
+            transition: transform 0.2s ease-in-out;
+            white-space: nowrap;
+        }
+        #navbar .logo:hover {
+            transform: scale(1.05);
+        }
+
+        #navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+
+        #navbar a {
+            color: var(--text-light);
+            font-size: 1em;
+            padding: 8px 15px;
+            transition: all var(--transition-speed);
+            position: relative;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        #navbar a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-glow);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width var(--transition-speed);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        #navbar a:hover,
+        #navbar a.active {
+            color: var(--secondary-glow);
+            text-shadow: 0 0 10px var(--secondary-glow);
+        }
+
+        #navbar a:hover::before,
+        #navbar a.active::before {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 2.2em;
+            background: none;
+            border: none;
+            color: var(--primary-glow);
+            cursor: pointer;
+            z-index: 1001;
+            text-shadow: 0 0 5px var(--primary-glow);
+            transition: transform var(--transition-speed);
+        }
+        .menu-toggle.open {
+            transform: rotate(90deg);
+        }
+
+        #navbar ul.mobile-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 20, 0.98);
+            border-top: 1px solid var(--border-color);
+            padding: 20px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #navbar ul.mobile-menu.open {
+            display: flex;
+        }
+
+        #navbar ul.mobile-menu li {
+            margin-bottom: 15px;
+        }
+
+        #navbar ul.mobile-menu a {
+            font-size: 1.2em;
+            display: block;
+            text-align: center;
+        }
+
+        /*
+        * =======================================
+        *        HERO SECTION
+        * =======================================
+        */
+        #hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+            padding: 120px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px dashed var(--accent-purple);
+            box-shadow: 0 0 30px rgba(142, 45, 226, 0.6);
+            /* Animación de scanline sutil */
+            animation: hero-scanline 15s infinite linear;
+            background-image:
+                linear-gradient(rgba(0,255,102,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,102,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        @keyframes hero-scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        #hero h1 {
+            color: var(--secondary-glow);
+            text-shadow: 0 0 15px var(--secondary-glow), 0 0 30px rgba(0, 224, 255, 0.8);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        #hero .tagline {
+            font-size: clamp(1.3em, 2.8vw, 2em);
+            color: var(--primary-glow);
+            text-shadow: 0 0 10px var(--primary-glow);
+            margin-bottom: 50px;
+            animation: pulse-shine 3s infinite alternate;
+        }
+
+        @keyframes pulse-shine {
+            from { text-shadow: 0 0 10px var(--primary-glow); }
+            to { text-shadow: 0 0 20px var(--primary-glow), 0 0 30px var(--secondary-glow); }
+        }
+
+        /*
+        * =======================================
+        *        GENERAL SECTIONS
+        * =======================================
+        */
+        section {
+            padding: 80px 0;
+            background-color: rgba(10, 10, 20, 0.6);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden; /* For inner effects */
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 0 0 12px var(--accent-purple), 0 0 25px var(--accent-pink);
+        }
+
+        /* Scroll Animation (Generalized) */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+            will-change: transform, opacity; /* Optimización */
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Terminal-like Blocks */
+        .terminal-block {
+            background-color: var(--terminal-bg);
+            border: 2px solid var(--secondary-glow);
+            border-radius: 12px;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 950px;
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.5), 0 0 40px rgba(142, 45, 226, 0.3) inset;
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-speed);
+            backdrop-filter: blur(8px); /* Glassmorphism en paneles */
+        }
+
+        .terminal-block:hover {
+            box-shadow: 0 0 25px var(--primary-glow), 0 0 50px var(--accent-purple) inset;
+            transform: translateY(-8px) scale(1.01);
+        }
+
+        .terminal-block::before { /* Top bar for terminal */
+            content: 'user@immortal-ia-dev:~ $';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #05050f; /* Even darker for the bar */
+            color: var(--primary-glow);
+            padding: 8px 20px;
+            border-bottom: 1px solid var(--primary-glow);
+            font-size: 0.9em;
+            text-align: left;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .terminal-block h3 {
+            margin-top: 25px; /* Space for the bar */
+            color: var(--primary-glow);
+            text-align: center;
+            font-size: 1.8em;
+            text-shadow: 0 0 8px var(--primary-glow);
+            margin-bottom: 30px;
+        }
+        .terminal-block p {
+            font-size: 1.1em;
+            color: var(--text-light);
+        }
+
+        /* Code & Preformatted Text */
+        pre {
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--primary-glow);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            color: var(--text-light);
+            text-shadow: 0 0 2px var(--primary-glow);
+            font-size: 0.9em;
+            line-height: 1.6;
+            animation: scanline-flicker 5s infinite alternate; /* Scanline flicker */
+            position: relative; /* For scanline overlay */
+        }
+        pre::after { /* Simulated scanline effect */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0,255,102,0.02) 50%,
+                transparent 100%
+            );
+            animation: scanline-move 5s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes scanline-flicker {
+            0%, 100% { opacity: 1; }
+            99.9% { opacity: 0.99; } /* Smallest flicker */
+            50% { opacity: 0.95; }
+        }
+        @keyframes scanline-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        code {
+            font-family: 'Roboto Mono', monospace;
+            color: var(--secondary-glow);
+            text-shadow: 0 0 3px var(--secondary-glow);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+            text-align: left;
+        }
+
+        .feature-item {
+            background-color: var(--terminal-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-speed);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.2);
+            color: var(--text-light);
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-item:hover {
+            box-shadow: 0 0 20px var(--primary-glow), 0 0 35px var(--accent-purple);
+            transform: translateY(-10px) scale(1.02);
+            background-color: rgba(0, 0, 0, 0.85);
+        }
+
+        .feature-item h3 {
+            color: var(--secondary-glow);
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px var(--secondary-glow);
+            text-align: left;
+            white-space: nowrap;
+        }
+        .feature-item p {
+            font-size: 1em;
+            color: var(--text-muted);
+        }
+
+        /*
+        * =======================================
+        *        INTERACTIVE CONSOLE DEMO
+        * =======================================
+        */
+        #interactive-console-demo {
+            padding-top: 100px;
+            padding-bottom: 100px;
+        }
+
+        .console-container {
+            background-color: #03030c; /* Más oscuro para el fondo del wrapper */
+            border: 3px solid var(--secondary-glow);
+            border-radius: 15px;
+            max-width: 1000px;
+            margin: 50px auto;
+            box-shadow: 0 0 30px rgba(0, 224, 255, 0.7), 0 0 60px rgba(142, 45, 226, 0.5) inset;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 650px; /* Altura fija para la consola */
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .console-header {
+            background-color: #1a1a2e;
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--primary-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-light);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9em;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .console-header .window-controls span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 8px;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .console-header .window-controls span:nth-child(1) { background-color: #ff5f56; } /* Close */
+        .console-header .window-controls span:nth-child(2) { background-color: #ffbd2e; } /* Minimize */
+        .console-header .window-controls span:nth-child(3) { background-color: #27c93f; } /* Maximize */
+
+        .console-output {
+            flex-grow: 1;
+            padding: 20px;
+            font-size: 0.95em;
+            color: var(--primary-glow);
+            white-space: pre-wrap; /* Preserve formatting */
+            overflow-y: auto;
+            background-color: var(--terminal-bg);
+            position: relative; /* For the cursor */
+            line-height: 1.5;
+            text-shadow: 0 0 2px var(--primary-glow); /* Subtle glow on text */
+            animation: scanline-flicker 5s infinite alternate;
+        }
+
+        .console-input-area {
+            display: flex;
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            background-color: rgba(10, 10, 20, 0.95);
+        }
+
+        .console-input-prefix {
+            color: var(--primary-glow);
+            margin-right: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .console-input {
+            background: none;
+            border: none;
+            flex-grow: 1;
+            color: var(--text-light);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.95em;
+            outline: none;
+            caret-color: var(--secondary-glow); /* Blinking cursor */
+            width: 100%; /* For full width within flex */
+        }
+        .console-input:focus {
+            outline: none; /* remove blue highlight on focus */
+            box-shadow: none;
+        }
+
+        .command-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .command-btn {
+            background-color: rgba(0, 150, 255, 0.2);
+            color: var(--secondary-glow);
+            border: 1px solid var(--secondary-glow);
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            box-shadow: 0 0 8px rgba(0, 224, 255, 0.3);
+            white-space: nowrap;
+        }
+
+        .command-btn:hover {
+            background-color: rgba(0, 150, 255, 0.4);
+            box-shadow: 0 0 15px var(--secondary-glow);
+            transform: translateY(-3px);
+        }
+        .command-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Cursor in terminal output */
+        .cursor {
+            display: inline-block;
+            background-color: var(--primary-glow);
+            width: 0.6em;
+            height: 1em; /* Adjust to font size */
+            vertical-align: middle;
+            margin-left: 2px;
+            animation: blink-cursor 1s step-end infinite;
+        }
+
+        @keyframes blink-cursor {
+            from, to { background-color: transparent; }
+            50% { background-color: var(--primary-glow); }
+        }
+
+        /*
+        * =======================================
+        *        FOOTER
+        * =======================================
+        */
+        #footer {
+            background-color: rgba(10, 10, 20, 0.95);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 2px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(142, 45, 226, 0.4);
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 0.95em;
+            backdrop-filter: blur(5px);
+        }
+
+        #footer p {
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        #footer a {
+            color: var(--primary-glow);
+        }
+
+        /*
+        * =======================================
+        *        PIXEL TRAIL CURSOR
+        * =======================================
+        */
+        .pixel-trail {
+            position: fixed;
+            background-color: var(--primary-glow);
+            width: var(--pixel-size);
+            height: var(--pixel-size);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0);
+            animation: fade-out-pixel 0.8s ease-out forwards;
+            box-shadow: 0 0 2px var(--primary-glow), 0 0 5px var(--secondary-glow);
+            z-index: 999;
+        }
+
+        @keyframes fade-out-pixel {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        /*
+        * =======================================
+        *        RESPONSIVE DESIGN
+        * =======================================
+        */
+        @media (max-width: 1024px) {
+            #navbar ul.main-menu {
+                gap: 25px;
+            }
+            .console-container {
+                height: 550px; /* Adjust height for smaller screens */
+            }
+            .console-output, .console-input {
+                font-size: 0.88em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            #navbar .logo {
+                font-size: 1.2em;
+            }
+            #navbar ul.main-menu {
+                display: none;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            #navbar .container {
+                justify-content: space-between;
+                padding: 0 20px;
+            }
+            #hero {
+                padding: 80px 15px 50px;
+            }
+            section {
+                padding: 60px 0;
+            }
+            .terminal-block {
+                padding: 30px;
+                margin: 20px 15px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            .feature-item h3 {
+                font-size: 1.4em;
+            }
+            .feature-item p {
+                font-size: 0.9em;
+            }
+            .console-container {
+                height: 450px;
+                margin: 30px 15px;
+            }
+            .console-header {
+                font-size: 0.8em;
+            }
+            .console-output, .console-input {
+                font-size: 0.8em;
+                padding: 15px;
+            }
+            .console-input-area {
+                padding: 10px 15px;
+            }
+            .command-buttons {
+                flex-direction: column;
+                gap: 10px;
+                padding: 0 15px; /* Add padding to buttons wrapper */
+            }
+            .command-btn {
+                width: 100%; /* Full width buttons */
+                padding: 12px;
+                font-size: 0.85em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .console-output, .console-input {
+                font-size: 0.75em;
+            }
+            #hero h1 {
+                font-size: 1.8em;
+            }
+            #hero .tagline {
+                font-size: 1.1em;
+            }
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.9em;
+            }
+            #footer p {
+                font-size: 0.8em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Background Animated Grid -->
+    <div class="background-grid"></div>
+
+    <!-- Menú de Navegación -->
+    <nav id="navbar">
+        <div class="container">
+            <a href="#" class="logo">Immortal IA Dev</a>
+            <button class="menu-toggle" aria-label="Toggle Navigation">☰</button>
+            <ul class="main-menu">
+                <li><a href="#hero" class="nav-link active">Inicio</a></li>
+                <li><a href="#features" class="nav-link">Características</a></li>
+                <li><a href="#interactive-console-demo" class="nav-link">Demo Consola</a></li>
+                <li><a href="#how-to-use" class="nav-link">Cómo Usar</a></li>
+                <li><a href="#contact" class="nav-link">Contacto</a></li>
+            </ul>
+            <ul class="mobile-menu">
+                <li><a href="#hero" class="nav-link">Inicio</a></li>
+                <li><a href="#features" class="nav-link">Características</a></li>
+                <li><a href="#interactive-console-demo" class="nav-link">Demo Consola</a></li>
+                <li><a href="#how-to-use" class="nav-link">Cómo Usar</a></li>
+                <li><a href="#contact" class="nav-link">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sección Hero (Banner principal) -->
+    <header id="hero" class="animate-on-scroll">
+        <div class="container">
+            <h1>Immortal IA Dev CLI</h1>
+            <p class="tagline">¡Desata tu Potencial, Genera Código con la Magia de la IA!</p>
+            <a href="https://github.com/your-repo-link" class="btn" target="_blank" rel="noopener noreferrer">¡Descargar Ahora!</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sección de Características -->
+        <section id="features">
+            <div class="container">
+                <h2>✨ Potencia y Flexibilidad sin Límites</h2>
+                <div class="features-grid">
+                    <div class="feature-item animate-on-scroll">
+                        <h3>Menú Interactivo RPG</h3>
+                        <p>Navega por las opciones como un mago del código, con una interfaz de terminal limpia y control total.</p>
+                    </div>
+                    <div class="feature-item animate-on-scroll">
+                        <h3>Generación Inteligente de Proyectos</h3>
+                        <p>Elige tu destino: Web (HTML/CSS/JS), Node.js con Express, React + Vite. ¡Listo para desarrollar al instante!</p>
+                    </div>
+                    <div class="feature-item animate-on-scroll">
+                        <h3>IA Integrada (Gemini/GPT)</h3>
+                        <p>Deja que nuestra IA escriba código, configure entornos y te guíe. Tu descripción, su magia.</p>
+                    </div>
+                    <div class="feature-item animate-on-scroll">
+                        <h3>Automatización Extrema</h3>
+                        <p>Instala dependencias, inicializa Git, genera READMEs, Dockerfiles. Tareas repetitivas, ¡nunca más!</p>
+                    </div>
+                    <div class="feature-item animate-on-scroll">
+                        <h3>Panel de Control Consolidado</h3>
+                        <p>Accede a tareas clave del proyecto desde una interfaz unificada en tu terminal, estilo panel de control RPG.</p>
+                    </div>
+                    <div class="feature-item animate-on-scroll">
+                        <h3>Customización a tu Medida</h3>
+                        <p>Configura scripts personalizados y estructuras. Adapta el flujo a tus necesidades únicas de desarrollo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Demostración de Consola Interactiva -->
+        <section id="interactive-console-demo">
+            <div class="container">
+                <h2 class="animate-on-scroll">🖥️ Vive la Experiencia CLI</h2>
+                <p class="text-center animate-on-scroll" style="margin-bottom: 50px;">
+                    Explora cómo Immortal IA Dev CLI transforma tu flujo de trabajo. <br>
+                    Haz clic en los comandos o escribe en la consola de abajo:
+                </p>
+
+                <div class="console-container animate-on-scroll">
+                    <div class="console-header">
+                        <span>immortal-ia-dev-cli@web-console:~$</span>
+                        <div class="window-controls">
+                            <span style="background-color: #ff5f56;"></span>
+                            <span style="background-color: #ffbd2e;"></span>
+                            <span style="background-color: #27c93f;"></span>
+                        </div>
+                    </div>
+                    <div class="console-output" id="consoleOutput">
+                        <span class="prompt">$</span> <span class="output-line"></span><br>
+                    </div>
+                    <div class="console-input-area">
+                        <span class="console-input-prefix">immortal-ia-dev~$</span>
+                        <input type="text" id="consoleInput" class="console-input" autofocus autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="command-buttons animate-on-scroll">
+                    <button class="command-btn" data-command="immortal-ia-dev create web my-new-web-app">Crear Proyecto Web Básico</button>
+                    <button class="command-btn" data-command="immortal-ia-dev create react-vite my-react-app --ts">Crear App React + Vite (TS)</button>
+                    <button class="command-btn" data-command="immortal-ia-dev ai-driven 'full-stack app with React, Node.js, and MongoDB for a social network.'">Generar con IA (App Full-Stack)</button>
+                    <button class="command-btn" data-command="npm install express axios nodemon">Instalar Paquetes Comunes</button>
+                    <button class="command-btn" data-command="help">Mostrar Ayuda</button>
+                    <button class="command-btn" data-command="clear" id="clearConsoleBtn">Limpiar Consola</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Sección Cómo Empezar -->
+        <section id="how-to-use">
+            <div class="container">
+                <h2 class="animate-on-scroll">🚀 Cómo Empezar</h2>
+                <div class="terminal-block animate-on-scroll">
+                    <h3>Paso 1: Adquiere tu Herramienta</h3>
+                    <p>Asegúrate de tener Node.js instalado. Luego, clona el repositorio o descarga el código fuente y navega al directorio del proyecto:</p>
+                    <pre><code>$ git clone https://github.com/your-user/immortal-ia-dev-cli.git
+$ cd immortal-ia-dev-cli
+$ npm install</code></pre>
+                    <p>Esto instalará todas las dependencias necesarias para que el CLI funcione.</p>
+                </div>
+                <div class="terminal-block animate-on-scroll">
+                    <h3>Paso 2: Conecta la Inteligencia</h3>
+                    <p>Para desatar el poder de la IA, necesitarás una API Key de Google Gemini (o OpenAI GPT). Crea un archivo <code>.env</code> en la raíz del proyecto y añade tu clave:</p>
+                    <pre><code>GOOGLE_API_KEY="TU_API_KEY_DE_GEMINI_AQUI"</code></pre>
+                    <p>Registra tu clave de API en <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a>.</p>
+                </div>
+                <div class="terminal-block animate-on-scroll">
+                    <h3>Paso 3: ¡Ejecuta el Inmortal!</h3>
+                    <p>Con todo configurado, lanza el CLI desde tu terminal. El menú interactivo te guiará por todas las opciones:</p>
+                    <pre><code>$ npm start</code></pre>
+                    <p>¡Felicidades, estás listo para crear proyectos a la velocidad de la luz!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <p>© 2024 Immortal IA Dev. Todos los derechos reservados. <br> Diseñado para desarrolladores, por desarrolladores... ¡y un poco de magia IA!</p>
+            <p>Contacto: <a href="mailto:info@immortaliadev.com">info@immortaliadev.com</a></p>
+        </div>
+    </footer>
+
+    <!--
+    * =======================================
+    *       JAVASCRIPT PARA ANIMACIONES E INTERACTIVIDAD
+    * =======================================
+    -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const navLinks = document.querySelectorAll('.nav-link');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
+            const body = document.body;
+            const navbar = document.getElementById('navbar');
+            const consoleOutput = document.getElementById('consoleOutput');
+            const consoleInput = document.getElementById('consoleInput');
+            const commandButtons = document.querySelectorAll('.command-btn');
+            const clearConsoleBtn = document.getElementById('clearConsoleBtn');
+
+
+            // --- General Helpers ---
+            const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+            // --- Scroll Animation (IntersectionObserver) ---
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.1 // 10% of element visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // No unobserve for continuous parallax or re-animation if needed,
+                        // but for single reveal, keeping it is fine.
+                        // observer.unobserve(entry.target); 
+                    } else {
+                        // Optional: remove is-visible class if you want elements to animate back out
+                        // entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements on load
+            animateOnScrollElements.forEach(el => observer.observe(el));
+
+
+            // --- Pixel Trail Cursor Animation ---
+            let lastX = 0;
+            let lastY = 0;
+            const pixelInterval = 10; // Generate a pixel every X pixels of movement
+
+            document.addEventListener('mousemove', (e) => {
+                const dx = Math.abs(e.clientX - lastX);
+                const dy = Math.abs(e.clientY - lastY);
+
+                if (dx > pixelInterval || dy > pixelInterval) {
+                    const pixel = document.createElement('div');
+                    pixel.classList.add('pixel-trail');
+                    pixel.style.left = `${e.clientX - (parseInt(getComputedStyle(body).getPropertyValue('--pixel-size')) / 2)}px`;
+                    pixel.style.top = `${e.clientY - (parseInt(getComputedStyle(body).getPropertyValue('--pixel-size')) / 2)}px`;
+                    body.appendChild(pixel);
+
+                    setTimeout(() => pixel.remove(), 800); // Matches fade-out-pixel animation duration
+                    lastX = e.clientX;
+                    lastY = e.clientY;
+                }
+            });
+
+
+            // --- Smooth Scroll & Active Nav Link ---
+            const updateActiveNavLink = () => {
+                let currentActiveSectionId = 'hero';
+                const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                const scrollOffset = window.scrollY + navbarHeight + 1; // +1 to ensure it ticks over section boundaries
+
+                document.querySelectorAll('section, header').forEach(element => {
+                    if (element.offsetTop <= scrollOffset && element.offsetTop + element.offsetHeight > scrollOffset) {
+                        currentActiveSectionId = element.id;
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentActiveSectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - (navbar ? navbar.offsetHeight : 0),
+                            behavior: 'smooth'
+                        });
+
+                        // Close mobile menu if open
+                        if (mobileMenu.classList.contains('open')) {
+                            mobileMenu.classList.remove('open');
+                            menuToggle.classList.remove('open');
+                        }
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', updateActiveNavLink);
+            updateActiveNavLink(); // Set active class on load
+
+            // --- Mobile Menu Toggle ---
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+                menuToggle.classList.toggle('open');
+            });
+
+            // Close mobile menu on click outside
+            document.addEventListener('click', (e) => {
+                if (navbar && !navbar.contains(e.target) && mobileMenu.classList.contains('open')) {
+                    mobileMenu.classList.remove('open');
+                    menuToggle.classList.remove('open');
+                }
+            });
+
+            // --- Interactive Console Demo Logic ---
+            const consoleCommands = {
+                "immortal-ia-dev create web my-new-web-app": [
+                    "🚀 Generando proyecto web básico 'my-new-web-app'...",
+                    "Creando directorio: /home/user/my-new-web-app",
+                    "Copiando index.html...",
+                    "Copiando style.css...",
+                    "Copiando script.js...",
+                    "✅ Proyecto 'my-new-web-app' creado exitosamente.",
+                    "Instrucciones: cd my-new-web-app && npx http-server (o similar)"
+                ],
+                "immortal-ia-dev create react-vite my-react-app --ts": [
+                    "🚀 Iniciando creación de app React con Vite (TypeScript) 'my-react-app'...",
+                    "Ejecutando: npm create vite@latest my-react-app -- --template react-ts",
+                    "npm create vite@latest output:\n  Scaffolding project in /home/user/my-react-app...",
+                    "  Done. Now run:",
+                    "    cd my-react-app",
+                    "    npm install",
+                    "    npm run dev",
+                    "✅ Aplicación React con Vite creada.",
+                    "Instrucciones: cd my-react-app && npm install && npm run dev"
+                ],
+                "immortal-ia-dev ai-driven 'full-stack app with React, Node.js, and MongoDB for a social network.'": [
+                    "🧠 Modo Generación con IA (Gemini) 🤖",
+                    "Analizando descripción: 'full-stack app with React, Node.js, and MongoDB for a social network.'",
+                    "Consultando a Gemini para generar estructura y código...",
+                    "⏳ Esto puede tardar un momento...",
+                    "✅ Gemini ha generado la estructura del proyecto 'social-network-app'.",
+                    "Creando directorio: /home/user/social-network-app",
+                    "Creando package.json...",
+                    "Creando src/server.js (Node.js/Express)...",
+                    "Creando src/client/App.js (React)...",
+                    "Creando public/index.html...",
+                    "Creando Dockerfile...",
+                    "Creando README.md...",
+                    "Instalando dependencias (npm install)..",
+                    "Dependencias instaladas. 🎉",
+                    "✅ Proyecto 'social-network-app' generado por IA exitosamente.",
+                    "Instrucciones:",
+                    "1. cd social-network-app",
+                    "2. npm start (para el backend) y cd src/client && npm run dev (para el frontend)",
+                    "3. Asegúrate de tener MongoDB ejecutándose."
+                ],
+                "npm install express axios nodemon": [
+                    "🚀 Instalando paquetes: express axios nodemon...",
+                    "+ express@4.18.2",
+                    "+ axios@1.6.8",
+                    "+ nodemon@3.1.0",
+                    "added 3 packages, and audited 1000 packages in 5s",
+                    "134 packages are looking for funding",
+                    "  run `npm fund` for details",
+                    "found 0 vulnerabilities",
+                    "✅ Paquetes instalados exitosamente."
+                ],
+                "help": [
+                    "IMMORTAL IA DEV CLI Ayuda:",
+                    "- 'immortal-ia-dev create <type> <name>': Crea un nuevo proyecto (web, node, react-vite).",
+                    "- 'immortal-ia-dev ai-driven '<description>'': Deja que la IA genere un proyecto desde una descripción.",
+                    "- 'npm install <packages>': Instala paquetes de Node.js.",
+                    "- 'clear': Limpia la consola de demostración.",
+                    "Para más detalles, consulta la documentación completa en nuestro GitHub."
+                ]
+            };
+
+            const typeSpeed = 20; // Typing speed for console output (ms per character)
+            const lineDelayMs = 400; // Delay between lines of output
+
+            async function typeOutput(outputElement, text) {
+                for (let i = 0; i < text.length; i++) {
+                    outputElement.innerHTML += text.charAt(i);
+                    outputElement.scrollTop = outputElement.scrollHeight; // Scroll to bottom
+                    await sleep(typeSpeed);
+                }
+            }
+
+            async function runConsoleCommand(command) {
+                consoleInput.value = ''; // Clear input if it was typed
+                const promptElement = document.createElement('span');
+                promptElement.classList.add('prompt');
+                promptElement.textContent = '$ ';
+                consoleOutput.appendChild(promptElement);
+
+                const commandLine = document.createElement('span');
+                commandLine.classList.add('command-line');
+                commandOutputSpan = document.createElement('span'); // Span for current line output
+                commandLine.appendChild(commandOutputSpan);
+                consoleOutput.appendChild(commandLine);
+                
+                await typeOutput(commandOutputSpan, command);
+                await sleep(lineDelayMs);
+
+                // Add new line for the output below the command
+                consoleOutput.appendChild(document.createElement('br'));
+
+                const outputs = consoleCommands[command] || ["Comando no reconocido. Prueba 'help'."];
+
+                for (const line of outputs) {
+                    const outputLineSpan = document.createElement('span');
+                    outputLineSpan.classList.add('output-line');
+                    consoleOutput.appendChild(outputLineSpan);
+                    await typeOutput(outputLineSpan, line);
+                    consoleOutput.appendChild(document.createElement('br'));
+                    await sleep(lineDelayMs);
+                }
+                
+                // Add the trailing empty prompt
+                const trailingPromptElement = document.createElement('span');
+                trailingPromptElement.classList.add('prompt');
+                trailingPromptElement.innerHTML = 'immortal-ia-dev~$ <span class="cursor"></span>';
+                consoleOutput.appendChild(trailingPromptElement);
+                consoleOutput.scrollTop = consoleOutput.scrollHeight; // Ensure it's scrolled to the very bottom
+
+                consoleInput.focus(); // Re-focus the input after command runs
+            }
+
+            function clearConsole() {
+                consoleOutput.innerHTML = ''; // Clear all content
+                const initialPrompt = document.createElement('span');
+                initialPrompt.classList.add('prompt');
+                initialPrompt.innerHTML = 'immortal-ia-dev~$ <span class="cursor"></span>';
+                consoleOutput.appendChild(initialPrompt);
+                consoleInput.focus();
+            }
+
+            // Event Listeners for console
+            commandButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const command = button.dataset.command;
+                    if (command === 'clear') {
+                        clearConsole();
+                    } else {
+                        runConsoleCommand(command);
+                    }
+                });
+            });
+
+            consoleInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const typedCommand = consoleInput.value.trim();
+                    if (typedCommand === 'clear') {
+                        clearConsole();
+                    } else if (consoleCommands[typedCommand]) {
+                        runConsoleCommand(typedCommand);
+                    } else {
+                        // Handle unrecognized commands
+                        const promptElement = document.createElement('span');
+                        promptElement.classList.add('prompt');
+                        promptElement.textContent = '$ ';
+                        consoleOutput.appendChild(promptElement);
+                        
+                        const commandLine = document.createElement('span');
+                        commandLine.classList.add('command-line');
+                        commandLine.textContent = typedCommand;
+                        consoleOutput.appendChild(commandLine);
+                        consoleOutput.appendChild(document.createElement('br')); // New line after typed command
+                        
+                        const outputLineSpan = document.createElement('span');
+                        outputLineSpan.classList.add('output-line');
+                        outputLineSpan.textContent = `Comando no reconocido: '${typedCommand}'. Prueba 'help'.`;
+                        consoleOutput.appendChild(outputLineSpan);
+                        consoleOutput.appendChild(document.createElement('br')); // New line after output
+                        
+                        // Add trailing empty prompt
+                        const trailingPromptElement = document.createElement('span');
+                        trailingPromptElement.classList.add('prompt');
+                        trailingPromptElement.innerHTML = 'immortal-ia-dev~$ <span class="cursor"></span>';
+                        consoleOutput.appendChild(trailingPromptElement);
+
+                        consoleOutput.scrollTop = consoleOutput.scrollHeight; // Scroll to bottom
+                        consoleInput.value = ''; // Clear input
+                    }
+                }
+            });
+
+            clearConsoleBtn.addEventListener('click', clearConsole);
+
+            // Initial console prompt
+            clearConsole(); // To show the initial prompt
+
+        });
+    </script>
+</body>
+</html>
