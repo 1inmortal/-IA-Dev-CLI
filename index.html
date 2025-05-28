@@ -3,35 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Immortal IA Dev CLI - Tu Asistente de Desarrollo Definitivo</title>
+    <title>Immortal IA Dev - Unidad de Despliegue de Software Táctico</title>
 
-    <!-- Google Fonts: Futuristic & Code Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Inter para legibilidad, Orbitron para titulos, Fira Code para consola/codigo -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         /*
         * =======================================
-        *       CSS GENERAL & VARIABLES
+        *       CSS: Variables Globales y Reset
         * =======================================
         */
         :root {
-            --bg-dark: #0d0d1a; /* Fondo muy oscuro, casi negro */
-            --primary-glow: #00ff66; /* Verde neón (código, acentos) */
-            --secondary-glow: #00e0ff; /* Cian neón (títulos, interacciones) */
-            --accent-purple: #8e2de2; /* Púrpura brillante */
-            --accent-pink: #c700ff; /* Rosa eléctrico */
-            --text-light: #e0e0e0; /* Texto claro legible */
-            --text-muted: #a0a0a0; /* Texto secundario */
-            --border-color: rgba(0, 224, 255, 0.3); /* Bordes sutiles */
-            --terminal-bg: rgba(0, 0, 0, 0.8); /* Fondo de la terminal */
-            --shadow-strength: 0 0 15px rgba(0, 224, 255, 0.5), 0 0 30px rgba(142, 45, 226, 0.3);
-            --transition-speed: 0.4s ease-in-out;
-            --pixel-size: 2px;
+            --color-bg-primary: #0a0a1a; /* Fondo principal muy oscuro */
+            --color-bg-secondary: #121226; /* Fondo para bloques/tarjetas */
+            --color-text-light: #e0e0f0; /* Texto principal claro */
+            --color-text-muted: #9aa5b1; /* Texto secundario/descripciones */
+
+            --color-accent-blue: #00bcd4; /* Azul Cian para acentos y glows */
+            --color-accent-green: #00e676; /* Verde para confirmaciones/éxito */
+            --color-accent-purple: #7b1fa2; /* Púrpura profundo para elementos clave */
+            --color-accent-orange: #ffab00; /* Naranja/amarillo para alertas/énfasis */
+
+            --border-style: 1px solid rgba(255, 255, 255, 0.1); /* Bordes sutiles */
+            --shadow-glow-weak: 0 0 8px rgba(0, 188, 212, 0.3);
+            --shadow-glow-strong: 0 0 15px rgba(0, 188, 212, 0.5), 0 0 30px rgba(123, 31, 162, 0.3);
+
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-code: 'Fira Code', monospace;
+
+            --transition-duration: 0.4s;
+            --pixel-size: 2px; /* Para el rastro del cursor */
         }
 
-        /* Base & Resets */
+        /* Resets básicos */
         * {
             margin: 0;
             padding: 0;
@@ -45,124 +53,102 @@
         }
 
         body {
-            font-family: 'Roboto Mono', monospace; /* Fuente más legible para código */
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.8;
+            font-family: var(--font-body);
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-light);
+            line-height: 1.6;
             overflow-x: hidden;
             position: relative;
-            min-height: 100vh; /* Asegura que el footer se vea bien */
+            min-height: 100vh;
         }
 
-        /* Scrollbar Styling */
+        /* Scrollbar Styling (Minimalist) */
         ::-webkit-scrollbar {
             width: 8px;
         }
-
         ::-webkit-scrollbar-track {
-            background: #2b2b40;
-            border-radius: 10px;
+            background: var(--color-bg-secondary);
         }
-
         ::-webkit-scrollbar-thumb {
-            background: var(--primary-glow);
-            border-radius: 10px;
-            box-shadow: 0 0 5px var(--primary-glow);
+            background: var(--color-accent-blue);
+            border-radius: 4px;
         }
-
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary-glow);
-            box-shadow: 0 0 8px var(--secondary-glow);
+            background: var(--color-accent-green);
         }
 
         /* Global Text & Links */
         h1, h2, h3, h4 {
-            font-family: 'Orbitron', sans-serif; /* Títulos con fuente futurista */
-            color: var(--secondary-glow);
-            text-shadow: 0 0 10px rgba(0, 224, 255, 0.8);
+            font-family: var(--font-display);
+            color: var(--color-accent-blue);
+            text-shadow: var(--shadow-glow-weak);
             margin-bottom: 25px;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        h1 { font-size: clamp(3em, 6vw, 5.5em); }
-        h2 { font-size: clamp(2em, 4.5vw, 3.5em); }
-        h3 { font-size: clamp(1.5em, 3vw, 2.5em); }
+        h1 { font-size: clamp(2.8em, 5vw, 4.8em); line-height: 1.1; }
+        h2 { font-size: clamp(2em, 4vw, 3.2em); margin-bottom: 40px; }
+        h3 { font-size: clamp(1.5em, 3vw, 2.2em); margin-bottom: 20px; }
 
         p {
             margin-bottom: 20px;
-            color: var(--text-muted);
+            color: var(--color-text-muted);
             font-size: 1.05em;
         }
 
         a {
-            color: var(--primary-glow);
+            color: var(--color-accent-green);
             text-decoration: none;
-            transition: color var(--transition-speed), text-shadow var(--transition-speed);
+            transition: color var(--transition-duration), text-shadow var(--transition-duration);
         }
-
         a:hover {
-            color: var(--secondary-glow);
-            text-shadow: 0 0 8px var(--secondary-glow);
+            color: var(--color-accent-blue);
+            text-shadow: 0 0 5px var(--color-accent-blue);
         }
 
         /* Utility classes */
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 30px;
+            padding: 0 30px; /* Adjusted to be specific, sections will add top/bottom */
             position: relative;
+            z-index: 1; /* Ensure content is above background */
         }
-
         .text-center {
             text-align: center;
         }
 
-        /* Buttons */
+        /* Buttons (More tactical look) */
         .btn {
-            background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink));
-            color: var(--text-light);
-            padding: 18px 40px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
+            background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue));
+            color: var(--color-text-light);
+            padding: 15px 35px;
+            border: var(--border-style);
+            border-radius: 6px;
+            font-size: 1.05em;
             cursor: pointer;
-            transition: all var(--transition-speed);
-            box-shadow: var(--shadow-strength);
+            transition: all var(--transition-duration);
+            box-shadow: var(--shadow-glow-strong);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
+            letter-spacing: 1.5px;
+            font-weight: 600;
             position: relative;
             overflow: hidden;
             display: inline-block;
+            backdrop-filter: blur(3px); /* Subtle glass effect */
         }
 
         .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px var(--secondary-glow), 0 0 40px var(--accent-purple);
-            background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+            transform: translateY(-3px) scale(1.01);
+            background: linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-green));
+            box-shadow: 0 0 20px var(--color-accent-blue), 0 0 40px var(--color-accent-purple);
+        }
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-glow-weak);
         }
 
-        .btn::before { /* Ripple effect */
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: width 0.6s ease, height 0.6s ease, opacity 0.6s ease;
-        }
-
-        .btn:active::before {
-            width: 200%;
-            height: 200%;
-            opacity: 1;
-        }
-
-        /* Animated Background Pattern (Optional: for entire body or specific sections) */
+        /* Animated Background Pattern (Global Subtle Grid) */
         .background-grid {
             position: fixed;
             top: 0;
@@ -170,18 +156,41 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
+            z-index: 0; /* Behind content */
             background-image:
-                linear-gradient(to right, rgba(0,224,255,0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0,224,255,0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
+                linear-gradient(to right, rgba(0, 188, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 188, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
             opacity: 0.1;
-            animation: grid-scroll 200s linear infinite;
+            animation: grid-pulse 20s infinite alternate, grid-scroll 200s linear infinite;
         }
-
+        @keyframes grid-pulse {
+            0%, 100% { opacity: 0.08; }
+            50% { opacity: 0.12; }
+        }
         @keyframes grid-scroll {
             from { background-position: 0 0; }
-            to { background-position: -4000px -4000px; }
+            to { background-position: -5000px -5000px; }
+        }
+
+        /* Scanline Overlay (Global, very subtle) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.05) 50%, rgba(255,255,255,0.02) 50%);
+            background-size: 100% 2px; /* Smallest scanline */
+            opacity: 0.05; /* Very subtle */
+            pointer-events: none;
+            z-index: 2; /* Above content but below UI */
+            animation: scanline-body 60s infinite linear;
+        }
+        @keyframes scanline-body {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
         }
 
         /*
@@ -190,93 +199,89 @@
         * =======================================
         */
         #navbar {
-            background-color: rgba(10, 10, 20, 0.95);
+            background-color: rgba(10, 10, 20, 0.98);
             padding: 20px 0;
-            border-bottom: 2px solid var(--border-color);
-            box-shadow: 0 0 20px rgba(0, 224, 255, 0.4);
+            border-bottom: 2px solid var(--color-accent-blue);
+            box-shadow: 0 0 25px rgba(0, 188, 212, 0.4);
             position: sticky;
             top: 0;
             z-index: 1000;
-            text-align: center;
-            backdrop-filter: blur(5px); /* Efecto cristal */
+            backdrop-filter: blur(8px); /* Fuerte efecto de cristal */
         }
-
         #navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 30px;
         }
-
         #navbar .logo {
-            font-family: 'Press Start 2P', cursive; /* Fuente retro para el logo */
-            color: var(--primary-glow);
-            font-size: 1.5em;
-            text-shadow: 0 0 5px var(--primary-glow);
-            transition: transform 0.2s ease-in-out;
+            font-family: var(--font-display);
+            color: var(--color-accent-green);
+            font-size: 1.8em;
+            text-shadow: 0 0 10px var(--color-accent-green);
+            transition: transform 0.3s ease;
             white-space: nowrap;
+            padding: 0 10px; /* Space for clickability */
         }
         #navbar .logo:hover {
             transform: scale(1.05);
+            text-shadow: 0 0 15px var(--color-accent-blue);
         }
-
         #navbar ul {
             list-style: none;
             display: flex;
             gap: 40px;
         }
-
         #navbar a {
-            color: var(--text-light);
+            color: var(--color-text-light);
             font-size: 1em;
-            padding: 8px 15px;
-            transition: all var(--transition-speed);
+            padding: 10px 0;
+            transition: all var(--transition-duration);
             position: relative;
             text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 0.5px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
         }
-
-        #navbar a::before {
+        #navbar a::before, #navbar a::after {
             content: '';
             position: absolute;
+            background: var(--color-accent-blue);
+            transition: all var(--transition-duration);
+        }
+        #navbar a::before { /* Bottom line */
             width: 0;
             height: 2px;
-            background-color: var(--primary-glow);
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            transition: width var(--transition-speed);
-            box-shadow: 0 0 8px var(--primary-glow);
+            box-shadow: 0 0 10px var(--color-accent-blue);
         }
-
-        #navbar a:hover,
-        #navbar a.active {
-            color: var(--secondary-glow);
-            text-shadow: 0 0 10px var(--secondary-glow);
+        #navbar a::after { /* Top line (smaller) */
+            width: 0;
+            height: 1px;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 5px var(--color-accent-blue);
         }
+        #navbar a:hover::before, #navbar a.active::before { width: 100%; }
+        #navbar a:hover::after, #navbar a.active::after { width: 70%; }
 
-        #navbar a:hover::before,
-        #navbar a.active::before {
-            width: 100%;
-        }
-
-        /* Mobile Menu */
+        /* Mobile Menu Toggle */
         .menu-toggle {
             display: none;
-            font-size: 2.2em;
+            font-size: 2.5em;
             background: none;
             border: none;
-            color: var(--primary-glow);
+            color: var(--color-accent-blue);
             cursor: pointer;
             z-index: 1001;
-            text-shadow: 0 0 5px var(--primary-glow);
-            transition: transform var(--transition-speed);
+            text-shadow: 0 0 10px var(--color-accent-blue);
+            transition: transform var(--transition-duration);
         }
         .menu-toggle.open {
             transform: rotate(90deg);
+            color: var(--color-accent-green);
         }
-
         #navbar ul.mobile-menu {
             display: none;
             flex-direction: column;
@@ -284,24 +289,19 @@
             top: 100%;
             left: 0;
             width: 100%;
-            background-color: rgba(10, 10, 20, 0.98);
-            border-top: 1px solid var(--border-color);
-            padding: 20px 0;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            background-color: rgba(10, 10, 20, 0.99);
+            border-top: 1px solid var(--color-accent-blue);
+            padding: 30px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
         }
-
-        #navbar ul.mobile-menu.open {
-            display: flex;
-        }
-
-        #navbar ul.mobile-menu li {
-            margin-bottom: 15px;
-        }
-
+        #navbar ul.mobile-menu.open { display: flex; }
+        #navbar ul.mobile-menu li { margin-bottom: 20px; }
         #navbar ul.mobile-menu a {
-            font-size: 1.2em;
+            font-size: 1.3em;
             display: block;
             text-align: center;
+            padding: 10px;
         }
 
         /*
@@ -310,44 +310,35 @@
         * =======================================
         */
         #hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8));
-            padding: 120px 20px 80px;
+            background: radial-gradient(circle at center, rgba(10,10,20,0.9), rgba(0,0,0,0.8));
+            padding: 150px 0 100px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            border-bottom: 3px dashed var(--accent-purple);
-            box-shadow: 0 0 30px rgba(142, 45, 226, 0.6);
-            /* Animación de scanline sutil */
-            animation: hero-scanline 15s infinite linear;
-            background-image:
-                linear-gradient(rgba(0,255,102,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,255,102,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
+            border-bottom: 3px double var(--color-accent-purple);
+            box-shadow: 0 0 40px rgba(123, 31, 162, 0.7);
         }
-
-        @keyframes hero-scanline {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 100%; }
-        }
-
         #hero h1 {
-            color: var(--secondary-glow);
-            text-shadow: 0 0 15px var(--secondary-glow), 0 0 30px rgba(0, 224, 255, 0.8);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+            color: var(--color-accent-blue);
+            text-shadow: 0 0 20px var(--color-accent-blue), 0 0 40px rgba(0, 188, 212, 0.8);
+            letter-spacing: 3px;
+            line-height: 1.1;
+            margin-bottom: 25px;
         }
-
         #hero .tagline {
-            font-size: clamp(1.3em, 2.8vw, 2em);
-            color: var(--primary-glow);
-            text-shadow: 0 0 10px var(--primary-glow);
-            margin-bottom: 50px;
-            animation: pulse-shine 3s infinite alternate;
+            font-size: clamp(1.4em, 2.8vw, 2em);
+            color: var(--color-accent-green);
+            text-shadow: 0 0 12px var(--color-accent-green);
+            margin-bottom: 60px;
+            animation: pulse-shine-hero 4s infinite alternate;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            letter-spacing: 0.5px;
         }
-
-        @keyframes pulse-shine {
-            from { text-shadow: 0 0 10px var(--primary-glow); }
-            to { text-shadow: 0 0 20px var(--primary-glow), 0 0 30px var(--secondary-glow); }
+        @keyframes pulse-shine-hero {
+            0%, 100% { text-shadow: 0 0 12px var(--color-accent-green), 0 0 25px rgba(0, 230, 118, 0.4); }
+            50% { text-shadow: 0 0 18px var(--color-accent-green), 0 0 35px rgba(0, 230, 118, 0.8), 0 0 50px rgba(0, 188, 212, 0.5); }
         }
 
         /*
@@ -356,315 +347,405 @@
         * =======================================
         */
         section {
-            padding: 80px 0;
-            background-color: rgba(10, 10, 20, 0.6);
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 30px;
+            padding: 100px 0;
+            background-color: var(--color-bg-secondary);
+            border-bottom: var(--border-style);
+            margin-bottom: 40px;
             position: relative;
-            overflow: hidden; /* For inner effects */
+            overflow: hidden;
+            backdrop-filter: blur(5px);
         }
-
         section h2 {
             text-align: center;
-            margin-bottom: 60px;
-            text-shadow: 0 0 12px var(--accent-purple), 0 0 25px var(--accent-pink);
+            margin-bottom: 80px;
+            text-shadow: 0 0 15px var(--color-accent-purple), 0 0 30px var(--color-accent-pink);
         }
 
-        /* Scroll Animation (Generalized) */
+        /* Scroll Animation (Elements appear with tactical precision) */
         .animate-on-scroll {
             opacity: 0;
-            transform: translateY(50px) scale(0.95);
-            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
-            will-change: transform, opacity; /* Optimización */
+            transform: translateY(60px) scale(0.9);
+            transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            will-change: transform, opacity; /* Performance optimization */
         }
-
         .animate-on-scroll.is-visible {
             opacity: 1;
             transform: translateY(0) scale(1);
         }
 
-        /* Terminal-like Blocks */
-        .terminal-block {
-            background-color: var(--terminal-bg);
-            border: 2px solid var(--secondary-glow);
-            border-radius: 12px;
+        /* Tactical Data Blocks */
+        .data-block {
+            background-color: var(--color-bg-primary);
+            border: 2px solid var(--color-accent-blue);
+            border-radius: 10px;
             padding: 40px;
             margin: 30px auto;
-            max-width: 950px;
-            box-shadow: 0 0 20px rgba(0, 224, 255, 0.5), 0 0 40px rgba(142, 45, 226, 0.3) inset;
+            max-width: 900px;
+            box-shadow: var(--shadow-glow-strong), inset 0 0 20px rgba(0, 188, 212, 0.2);
             position: relative;
             overflow: hidden;
-            transition: all var(--transition-speed);
-            backdrop-filter: blur(8px); /* Glassmorphism en paneles */
+            transition: all var(--transition-duration);
+            backdrop-filter: blur(5px);
         }
-
-        .terminal-block:hover {
-            box-shadow: 0 0 25px var(--primary-glow), 0 0 50px var(--accent-purple) inset;
-            transform: translateY(-8px) scale(1.01);
+        .data-block:hover {
+            box-shadow: 0 0 30px var(--color-accent-green), 0 0 60px var(--color-accent-purple) inset;
+            transform: translateY(-8px) scale(1.005);
+            background-color: rgba(15, 15, 30, 0.95);
         }
-
-        .terminal-block::before { /* Top bar for terminal */
-            content: 'user@immortal-ia-dev:~ $';
+        .data-block::before { /* Border top */
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background-color: #05050f; /* Even darker for the bar */
-            color: var(--primary-glow);
-            padding: 8px 20px;
-            border-bottom: 1px solid var(--primary-glow);
-            font-size: 0.9em;
-            text-align: left;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            top: -2px; left: -2px; right: -2px; height: 5px;
+            background: linear-gradient(90deg, transparent, var(--color-accent-green), transparent);
+            transition: width var(--transition-duration);
         }
-        .terminal-block h3 {
-            margin-top: 25px; /* Space for the bar */
-            color: var(--primary-glow);
-            text-align: center;
-            font-size: 1.8em;
-            text-shadow: 0 0 8px var(--primary-glow);
-            margin-bottom: 30px;
-        }
-        .terminal-block p {
-            font-size: 1.1em;
-            color: var(--text-light);
+        .data-block:hover::before { width: 100%; animation: border-pulse 1.5s infinite alternate; }
+
+        @keyframes border-pulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; transform: scaleX(1.02); }
         }
 
-        /* Code & Preformatted Text */
+        .data-block h3 {
+            margin-top: 10px;
+            color: var(--color-accent-blue);
+            text-align: center;
+            font-size: 1.6em;
+            text-shadow: 0 0 8px var(--color-accent-blue);
+            margin-bottom: 30px;
+            letter-spacing: 0.8px;
+        }
+        .data-block p {
+            font-size: 1.05em;
+            color: var(--color-text-muted);
+        }
+
+        /* Console Code Style */
         pre {
-            background-color: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--primary-glow);
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--color-accent-green);
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow-x: auto;
             margin-top: 30px;
             margin-bottom: 30px;
-            color: var(--text-light);
-            text-shadow: 0 0 2px var(--primary-glow);
+            color: var(--color-text-light);
+            text-shadow: 0 0 2px var(--color-accent-green);
+            font-family: var(--font-code);
             font-size: 0.9em;
             line-height: 1.6;
-            animation: scanline-flicker 5s infinite alternate; /* Scanline flicker */
-            position: relative; /* For scanline overlay */
+            animation: flicker 0.8s infinite alternate; /* Subtle flicker */
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.2);
+            backdrop-filter: blur(2px);
         }
-        pre::after { /* Simulated scanline effect */
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0%,
-                rgba(0,255,102,0.02) 50%,
-                transparent 100%
-            );
-            animation: scanline-move 5s infinite linear;
-            pointer-events: none;
-        }
-
-        @keyframes scanline-flicker {
+        @keyframes flicker {
             0%, 100% { opacity: 1; }
-            99.9% { opacity: 0.99; } /* Smallest flicker */
-            50% { opacity: 0.95; }
+            50% { opacity: 0.98; }
         }
-        @keyframes scanline-move {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 100%; }
-        }
-
         code {
-            font-family: 'Roboto Mono', monospace;
-            color: var(--secondary-glow);
-            text-shadow: 0 0 3px var(--secondary-glow);
+            font-family: var(--font-code);
+            color: var(--color-accent-cyan); /* Specific for code snippets */
         }
-
-        /* Features Grid */
+        /* Feature Grid (More distinct items) */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
+            margin-top: 50px;
             text-align: left;
         }
 
         .feature-item {
-            background-color: var(--terminal-bg);
-            border: 1px solid var(--border-color);
+            background-color: var(--color-bg-secondary);
+            border: 1px solid rgba(0, 188, 212, 0.3);
             border-radius: 10px;
             padding: 30px;
             position: relative;
             overflow: hidden;
-            transition: all var(--transition-speed);
-            box-shadow: 0 0 15px rgba(0, 224, 255, 0.2);
-            color: var(--text-light);
+            transition: all var(--transition-duration);
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.2);
+            color: var(--color-text-light);
             backdrop-filter: blur(5px);
+            cursor: pointer; /* To indicate hover for info panel */
         }
-
         .feature-item:hover {
-            box-shadow: 0 0 20px var(--primary-glow), 0 0 35px var(--accent-purple);
-            transform: translateY(-10px) scale(1.02);
-            background-color: rgba(0, 0, 0, 0.85);
+            box-shadow: 0 0 20px var(--color-accent-blue), 0 0 40px var(--color-accent-purple);
+            transform: translateY(-12px) scale(1.02);
+            background-color: rgba(20, 20, 40, 0.95);
         }
-
         .feature-item h3 {
-            color: var(--secondary-glow);
-            font-size: 1.6em;
-            margin-bottom: 20px;
-            text-shadow: 0 0 8px var(--secondary-glow);
-            text-align: left;
-            white-space: nowrap;
+            color: var(--color-accent-green);
+            font-size: 1.5em;
+            text-shadow: 0 0 8px var(--color-accent-green);
+            margin-bottom: 15px;
         }
         .feature-item p {
-            font-size: 1em;
-            color: var(--text-muted);
+            font-size: 0.95em;
+            color: var(--color-text-muted);
         }
 
         /*
         * =======================================
-        *        INTERACTIVE CONSOLE DEMO
+        *        INTERACTIVE CONSOLE (Enhanced)
         * =======================================
         */
         #interactive-console-demo {
             padding-top: 100px;
             padding-bottom: 100px;
         }
-
         .console-container {
-            background-color: #03030c; /* Más oscuro para el fondo del wrapper */
-            border: 3px solid var(--secondary-glow);
+            background-color: rgba(0, 0, 0, 0.9);
+            border: 3px solid var(--color-accent-blue);
             border-radius: 15px;
             max-width: 1000px;
             margin: 50px auto;
-            box-shadow: 0 0 30px rgba(0, 224, 255, 0.7), 0 0 60px rgba(142, 45, 226, 0.5) inset;
+            box-shadow: 0 0 40px rgba(0, 188, 212, 0.7), 0 0 80px rgba(123, 31, 162, 0.5) inset;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 650px; /* Altura fija para la consola */
-            backdrop-filter: blur(10px);
+            height: 700px;
+            backdrop-filter: blur(12px);
             position: relative;
+            font-family: var(--font-code);
+            transform: perspective(1000px) rotateX(1deg); /* Subtle 3D tilt */
+            transition: transform 1s ease-out;
+        }
+        .console-container:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.005);
         }
 
         .console-header {
-            background-color: #1a1a2e;
-            padding: 12px 20px;
-            border-bottom: 1px solid var(--primary-glow);
+            background-color: var(--color-bg-primary);
+            padding: 15px 25px;
+            border-bottom: 1px solid var(--color-accent-green);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--text-light);
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.9em;
+            color: var(--color-text-light);
+            font-size: 0.95em;
             position: sticky;
             top: 0;
             z-index: 10;
         }
         .console-header .window-controls span {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-left: 8px;
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.2);
+            width: 14px; height: 14px; border-radius: 50%; margin-left: 10px;
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.3);
+            transition: transform 0.2s ease, opacity 0.2s ease;
         }
-        .console-header .window-controls span:nth-child(1) { background-color: #ff5f56; } /* Close */
-        .console-header .window-controls span:nth-child(2) { background-color: #ffbd2e; } /* Minimize */
-        .console-header .window-controls span:nth-child(3) { background-color: #27c93f; } /* Maximize */
+        .console-header .window-controls span:hover { transform: scale(1.2); opacity: 0.8; }
+        .console-header .window-controls span:nth-child(1) { background-color: #ff6b6b; } /* Red */
+        .console-header .window-controls span:nth-child(2) { background-color: #ffd166; } /* Yellow */
+        .console-header .window-controls span:nth-child(3) { background-color: #4CAF50; } /* Green */
 
         .console-output {
             flex-grow: 1;
-            padding: 20px;
-            font-size: 0.95em;
-            color: var(--primary-glow);
-            white-space: pre-wrap; /* Preserve formatting */
+            padding: 25px;
+            font-size: 0.9em;
+            color: var(--color-accent-green);
+            white-space: pre-wrap;
             overflow-y: auto;
-            background-color: var(--terminal-bg);
-            position: relative; /* For the cursor */
-            line-height: 1.5;
-            text-shadow: 0 0 2px var(--primary-glow); /* Subtle glow on text */
-            animation: scanline-flicker 5s infinite alternate;
+            background-color: var(--color-bg-primary);
+            position: relative;
+            line-height: 1.6;
+            text-shadow: 0 0 1px var(--color-accent-green);
+            animation: text-glow-subtle 6s infinite alternate; /* Very subtle text glow */
+            /* Scanline overlay for console output */
+            background-image: linear-gradient(rgba(0,230,118,0.02) 50%, transparent 50%);
+            background-size: 100% 3px;
+            animation: scanline-move 5s infinite linear;
+        }
+        @keyframes text-glow-subtle {
+            0%, 100% { text-shadow: 0 0 1px var(--color-accent-green); }
+            50% { text-shadow: 0 0 2px var(--color-accent-green), 0 0 5px rgba(0,230,118,0.2); }
+        }
+        @keyframes scanline-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
         }
 
         .console-input-area {
             display: flex;
-            padding: 15px 20px;
-            border-top: 1px solid var(--border-color);
-            background-color: rgba(10, 10, 20, 0.95);
+            padding: 20px 25px;
+            border-top: 1px solid var(--color-accent-blue);
+            background-color: rgba(10, 10, 20, 0.98);
         }
-
         .console-input-prefix {
-            color: var(--primary-glow);
-            margin-right: 10px;
-            font-weight: bold;
+            color: var(--color-accent-orange);
+            margin-right: 15px;
+            font-weight: 700;
             white-space: nowrap;
         }
-
         .console-input {
             background: none;
             border: none;
             flex-grow: 1;
-            color: var(--text-light);
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.95em;
+            color: var(--color-text-light);
+            font-family: var(--font-code);
+            font-size: 0.9em;
             outline: none;
-            caret-color: var(--secondary-glow); /* Blinking cursor */
-            width: 100%; /* For full width within flex */
-        }
-        .console-input:focus {
-            outline: none; /* remove blue highlight on focus */
-            box-shadow: none;
+            caret-color: var(--color-accent-blue); /* Blinking cursor for input */
+            width: 100%;
         }
 
         .command-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
+            gap: 20px;
+            margin-top: 40px;
             flex-wrap: wrap;
         }
-
         .command-btn {
-            background-color: rgba(0, 150, 255, 0.2);
-            color: var(--secondary-glow);
-            border: 1px solid var(--secondary-glow);
-            padding: 10px 20px;
+            background-color: rgba(0, 188, 212, 0.1);
+            color: var(--color-accent-blue);
+            border: 1px solid var(--color-accent-blue);
+            padding: 12px 25px;
             border-radius: 5px;
             cursor: pointer;
-            transition: all var(--transition-speed);
-            font-size: 0.9em;
+            transition: all var(--transition-duration);
+            font-size: 0.85em;
             text-transform: uppercase;
-            box-shadow: 0 0 8px rgba(0, 224, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 188, 212, 0.4);
             white-space: nowrap;
+            font-weight: 600;
         }
-
         .command-btn:hover {
-            background-color: rgba(0, 150, 255, 0.4);
-            box-shadow: 0 0 15px var(--secondary-glow);
-            transform: translateY(-3px);
+            background-color: rgba(0, 188, 212, 0.3);
+            box-shadow: 0 0 20px var(--color-accent-blue);
+            transform: translateY(-5px) scale(1.02);
+            color: var(--color-text-light);
         }
-        .command-btn:active {
-            transform: translateY(0);
-        }
+        .command-btn:active { transform: translateY(0); }
 
-        /* Cursor in terminal output */
+        /* Console Output Cursor (for typed commands / dynamic output) */
         .cursor {
             display: inline-block;
-            background-color: var(--primary-glow);
+            background-color: var(--color-accent-blue);
             width: 0.6em;
-            height: 1em; /* Adjust to font size */
+            height: 1em;
             vertical-align: middle;
             margin-left: 2px;
             animation: blink-cursor 1s step-end infinite;
         }
-
         @keyframes blink-cursor {
             from, to { background-color: transparent; }
-            50% { background-color: var(--primary-glow); }
+            50% { background-color: var(--color-accent-blue); }
+        }
+
+        /*
+        * =======================================
+        *        FLOATING HOLOGRAPHIC OVERLAY
+        * =======================================
+        */
+        #infoOverlay {
+            position: fixed;
+            display: none;
+            flex-direction: column;
+            width: 320px;
+            max-height: 450px;
+            background-color: rgba(0, 0, 0, 0.85); /* Slightly less opaque */
+            border: 2px solid var(--color-accent-orange);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 171, 0, 0.8), 0 0 40px rgba(255, 171, 0, 0.5) inset;
+            z-index: 2000;
+            pointer-events: none; /* Crucial: allows clicks on elements underneath */
+            backdrop-filter: blur(10px) brightness(1.2); /* Strong hologram blur */
+            opacity: 0;
+            transform: scale(0.9) translateY(10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            overflow: hidden;
+            font-family: var(--font-code);
+            transform-style: preserve-3d; /* For possible future 3D rotations */
+        }
+        #infoOverlay.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            display: flex; /* Display after transition start for proper animation */
+        }
+
+        .overlay-header {
+            background-color: rgba(255, 171, 0, 0.15); /* Light orange for header */
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--color-accent-orange);
+            color: var(--color-text-light);
+            font-size: 1em;
+            font-weight: 700;
+            text-align: center;
+            text-shadow: 0 0 5px var(--color-accent-orange);
+            letter-spacing: 0.5px;
+        }
+
+        .overlay-content {
+            padding: 15px;
+            color: var(--color-text-muted);
+            font-size: 0.9em;
+            line-height: 1.5;
+            flex-grow: 1;
+            overflow-y: auto; /* Scroll if content overflows */
+            position: relative;
+        }
+
+        .overlay-content strong {
+            color: var(--color-accent-blue);
+            text-shadow: 0 0 3px var(--color-accent-blue);
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        .overlay-content p {
+            margin-bottom: 10px;
+            color: var(--color-text-muted);
+        }
+
+        /* Hologram grid/flicker effect inside overlay content */
+        .overlay-content::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(to right, rgba(255, 171, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 171, 0, 0.05) 1px, transparent 1px);
+            background-size: 15px 15px;
+            opacity: 0.2;
+            pointer-events: none;
+            animation: overlay-flicker 0.5s infinite alternate; /* Hologram subtle flicker */
+        }
+        @keyframes overlay-flicker {
+            0%, 100% { opacity: 0.18; }
+            50% { opacity: 0.22; }
+        }
+
+
+        /*
+        * =======================================
+        *        PIXEL TRAIL CURSOR (Enhanced)
+        * =======================================
+        */
+        .pixel-trail {
+            position: fixed;
+            background-color: var(--color-accent-blue); /* Default trail color */
+            width: var(--pixel-size);
+            height: var(--pixel-size);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0);
+            animation: fade-out-pixel 0.8s ease-out forwards;
+            box-shadow: 0 0 3px var(--color-accent-blue), 0 0 8px rgba(0, 188, 212, 0.5);
+            z-index: 999;
+        }
+        /* Make pixels change color subtly on hover over interactive elements */
+        body.hovering-interactive .pixel-trail {
+            background-color: var(--color-accent-green);
+            box-shadow: 0 0 3px var(--color-accent-green), 0 0 8px rgba(0, 230, 118, 0.5);
+        }
+
+        @keyframes fade-out-pixel {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
         }
 
         /*
@@ -673,54 +754,24 @@
         * =======================================
         */
         #footer {
-            background-color: rgba(10, 10, 20, 0.95);
+            background-color: rgba(10, 10, 20, 0.98);
             padding: 40px 20px;
             text-align: center;
-            border-top: 2px solid var(--border-color);
-            box-shadow: 0 0 20px rgba(142, 45, 226, 0.4);
-            margin-top: 50px;
-            color: var(--text-muted);
+            border-top: 2px solid var(--color-accent-purple);
+            box-shadow: 0 0 25px rgba(123, 31, 162, 0.4);
+            margin-top: 60px;
+            color: var(--color-text-muted);
             font-size: 0.95em;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
-
         #footer p {
-            color: var(--text-light);
+            color: var(--color-text-light);
             margin-bottom: 10px;
         }
         #footer a {
-            color: var(--primary-glow);
+            color: var(--color-accent-blue);
         }
 
-        /*
-        * =======================================
-        *        PIXEL TRAIL CURSOR
-        * =======================================
-        */
-        .pixel-trail {
-            position: fixed;
-            background-color: var(--primary-glow);
-            width: var(--pixel-size);
-            height: var(--pixel-size);
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0;
-            transform: scale(0);
-            animation: fade-out-pixel 0.8s ease-out forwards;
-            box-shadow: 0 0 2px var(--primary-glow), 0 0 5px var(--secondary-glow);
-            z-index: 999;
-        }
-
-        @keyframes fade-out-pixel {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-        }
 
         /*
         * =======================================
@@ -728,99 +779,42 @@
         * =======================================
         */
         @media (max-width: 1024px) {
-            #navbar ul.main-menu {
-                gap: 25px;
-            }
-            .console-container {
-                height: 550px; /* Adjust height for smaller screens */
-            }
-            .console-output, .console-input {
-                font-size: 0.88em;
-            }
+            #navbar ul.main-menu { gap: 25px; }
+            .console-container { height: 600px; }
+            .console-output, .console-input { font-size: 0.88em; }
+            .data-block { padding: 30px; }
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            #navbar .logo {
-                font-size: 1.2em;
-            }
-            #navbar ul.main-menu {
-                display: none;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            #navbar .container {
-                justify-content: space-between;
-                padding: 0 20px;
-            }
-            #hero {
-                padding: 80px 15px 50px;
-            }
-            section {
-                padding: 60px 0;
-            }
-            .terminal-block {
-                padding: 30px;
-                margin: 20px 15px;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-            .feature-item h3 {
-                font-size: 1.4em;
-            }
-            .feature-item p {
-                font-size: 0.9em;
-            }
-            .console-container {
-                height: 450px;
-                margin: 30px 15px;
-            }
-            .console-header {
-                font-size: 0.8em;
-            }
-            .console-output, .console-input {
-                font-size: 0.8em;
-                padding: 15px;
-            }
-            .console-input-area {
-                padding: 10px 15px;
-            }
-            .command-buttons {
-                flex-direction: column;
-                gap: 10px;
-                padding: 0 15px; /* Add padding to buttons wrapper */
-            }
-            .command-btn {
-                width: 100%; /* Full width buttons */
-                padding: 12px;
-                font-size: 0.85em;
-            }
+            .container { padding: 0 20px; }
+            #navbar .logo { font-size: 1.5em; }
+            #navbar ul.main-menu { display: none; }
+            .menu-toggle { display: block; }
+            #navbar .container { padding: 0 20px; }
+            #hero { padding: 100px 15px 70px; }
+            section { padding: 70px 0; }
+            .data-block { padding: 25px; margin: 20px 15px; }
+            .features-grid { grid-template-columns: 1fr; gap: 35px; }
+            .feature-item h3 { font-size: 1.3em; }
+            .feature-item p { font-size: 0.9em; }
+            .console-container { height: 500px; margin: 30px 15px; }
+            .console-header { font-size: 0.8em; padding: 12px 18px; }
+            .console-output, .console-input { font-size: 0.8em; padding: 18px; }
+            .console-input-area { padding: 12px 18px; }
+            .command-buttons { flex-direction: column; gap: 10px; padding: 0 15px; }
+            .command-btn { width: 100%; padding: 10px; font-size: 0.8em; }
+            #infoOverlay { width: 90%; max-height: 400px; }
         }
 
         @media (max-width: 480px) {
-            .console-output, .console-input {
-                font-size: 0.75em;
-            }
-            #hero h1 {
-                font-size: 1.8em;
-            }
-            #hero .tagline {
-                font-size: 1.1em;
-            }
-            .btn {
-                padding: 12px 25px;
-                font-size: 0.9em;
-            }
-            #footer p {
-                font-size: 0.8em;
-            }
+            #hero h1 { font-size: 2.2em; }
+            #hero .tagline { font-size: 1.2em; }
+            .btn { padding: 12px 25px; font-size: 0.9em; }
+            h2 { font-size: 1.8em; margin-bottom: 50px; }
+            h3 { font-size: 1.3em; }
+            .console-output, .console-input { font-size: 0.7em; }
+            #footer p { font-size: 0.8em; }
         }
-
     </style>
 </head>
 <body>
@@ -831,21 +825,21 @@
     <!-- Menú de Navegación -->
     <nav id="navbar">
         <div class="container">
-            <a href="#" class="logo">Immortal IA Dev</a>
-            <button class="menu-toggle" aria-label="Toggle Navigation">☰</button>
+            <a href="#hero" class="logo" data-audio-click="sound_navigate">Immortal IA Dev</a>
+            <button class="menu-toggle" aria-label="Toggle Navigation" data-audio-click="sound_menu_toggle">☰</button>
             <ul class="main-menu">
-                <li><a href="#hero" class="nav-link active">Inicio</a></li>
-                <li><a href="#features" class="nav-link">Características</a></li>
-                <li><a href="#interactive-console-demo" class="nav-link">Demo Consola</a></li>
-                <li><a href="#how-to-use" class="nav-link">Cómo Usar</a></li>
-                <li><a href="#contact" class="nav-link">Contacto</a></li>
+                <li><a href="#hero" class="nav-link active" data-audio-click="sound_navigate">Inicio</a></li>
+                <li><a href="#features" class="nav-link" data-audio-click="sound_navigate">Funcionalidades</a></li>
+                <li><a href="#interactive-console-demo" class="nav-link" data-audio-click="sound_navigate">Demo Consola</a></li>
+                <li><a href="#how-to-use" class="nav-link" data-audio-click="sound_navigate">Guía de Inicio</a></li>
+                <li><a href="#contact" class="nav-link" data-audio-click="sound_navigate">Contacto</a></li>
             </ul>
             <ul class="mobile-menu">
-                <li><a href="#hero" class="nav-link">Inicio</a></li>
-                <li><a href="#features" class="nav-link">Características</a></li>
-                <li><a href="#interactive-console-demo" class="nav-link">Demo Consola</a></li>
-                <li><a href="#how-to-use" class="nav-link">Cómo Usar</a></li>
-                <li><a href="#contact" class="nav-link">Contacto</a></li>
+                <li><a href="#hero" class="nav-link" data-audio-click="sound_navigate">Inicio</a></li>
+                <li><a href="#features" class="nav-link" data-audio-click="sound_navigate">Funcionalidades</a></li>
+                <li><a href="#interactive-console-demo" class="nav-link" data-audio-click="sound_navigate">Demo Consola</a></li>
+                <li><a href="#how-to-use" class="nav-link" data-audio-click="sound_navigate">Guía de Inicio</a></li>
+                <li><a href="#contact" class="nav-link" data-audio-click="sound_navigate">Contacto</a></li>
             </ul>
         </div>
     </nav>
@@ -854,8 +848,8 @@
     <header id="hero" class="animate-on-scroll">
         <div class="container">
             <h1>Immortal IA Dev CLI</h1>
-            <p class="tagline">¡Desata tu Potencial, Genera Código con la Magia de la IA!</p>
-            <a href="https://github.com/your-repo-link" class="btn" target="_blank" rel="noopener noreferrer">¡Descargar Ahora!</a>
+            <p class="tagline">La Unidad de Despliegue de Software Táctico impulsada por IA. <br> Precisión. Eficiencia. Inmortalidad.</p>
+            <a href="https://github.com/your-repo-link" class="btn" target="_blank" rel="noopener noreferrer" data-audio-click="sound_action_confirm" data-audio-hover="sound_hover_subtle">¡Descargar Archivos Operativos!</a>
         </div>
     </header>
 
@@ -863,31 +857,47 @@
         <!-- Sección de Características -->
         <section id="features">
             <div class="container">
-                <h2>✨ Potencia y Flexibilidad sin Límites</h2>
+                <h2 class="animate-on-scroll">✨ Protocolos y Módulos Clave</h2>
                 <div class="features-grid">
-                    <div class="feature-item animate-on-scroll">
-                        <h3>Menú Interactivo RPG</h3>
-                        <p>Navega por las opciones como un mago del código, con una interfaz de terminal limpia y control total.</p>
+                    <div class="feature-item animate-on-scroll"
+                        data-audio-hover="sound_hover_info"
+                        data-info-title="Módulo RPG Interfaz"
+                        data-info-desc="Sistema de interfaz de usuario de consola para navegación táctica y selección de operaciones. Optimizado para entornos de bajo consumo de recursos."
+                        data-info-reqs="Requisitos: Acceso a terminal, Node.js v14+, InquirerJS."
+                        data-info-highlight="Estado: Operativo 100%. Latencia: 0.05ms."
+                        >
+                        <h3>Módulo: Control Táctico de Consola</h3>
+                        <p>Interfaz de control basada en consola, proporcionando una experiencia precisa y ágil para la selección de comandos.</p>
                     </div>
-                    <div class="feature-item animate-on-scroll">
-                        <h3>Generación Inteligente de Proyectos</h3>
-                        <p>Elige tu destino: Web (HTML/CSS/JS), Node.js con Express, React + Vite. ¡Listo para desarrollar al instante!</p>
+                    <div class="feature-item animate-on-scroll"
+                        data-audio-hover="sound_hover_info"
+                        data-info-title="Sistema de Inyección de Estructura"
+                        data-info-desc="Generación automatizada de esqueletos de proyectos, desde bases monolíticas hasta microfrontends/microservicios. Reduce el tiempo de configuración inicial en un 90%."
+                        data-info-reqs="Soporte: Web (HTML/CSS/JS), Node.js (Express), React (Vite). Arquitecturas: SPA, SSR, API-only."
+                        data-info-highlight="Eficiencia: Despliegue de estructuras en < 1 segundo."
+                        >
+                        <h3>Módulo: Despliegue Rápido de Proyectos</h3>
+                        <p>Inicia tu despliegue con estructuras pre-optimizadas para diversos entornos: web, API, y aplicaciones modernas.</p>
                     </div>
-                    <div class="feature-item animate-on-scroll">
-                        <h3>IA Integrada (Gemini/GPT)</h3>
-                        <p>Deja que nuestra IA escriba código, configure entornos y te guíe. Tu descripción, su magia.</p>
+                    <div class="feature-item animate-on-scroll"
+                        data-audio-hover="sound_hover_info"
+                        data-info-title="Motor Cognitivo IA (Gemini/GPT)"
+                        data-info-desc="Integración avanzada con modelos de lenguaje masivos para autocompletar código, generar configuraciones complejas y resolver desafíos algorítmicos. Acceso a base de datos de conocimiento global."
+                        data-info-reqs="Conectividad: API Key (Gemini/GPT), Internet. Coste: Según consumo de tokens."
+                        data-info-highlight="Inteligencia: Capacidad de aprendizaje continuo. Prioridad: Alta."
+                        >
+                        <h3>Módulo: Procesamiento de IA Colaborativo</h3>
+                        <p>Asistencia inteligente para la creación y optimización de código, configuraciones de entorno y documentación automatizada.</p>
                     </div>
-                    <div class="feature-item animate-on-scroll">
-                        <h3>Automatización Extrema</h3>
-                        <p>Instala dependencias, inicializa Git, genera READMEs, Dockerfiles. Tareas repetitivas, ¡nunca más!</p>
-                    </div>
-                    <div class="feature-item animate-on-scroll">
-                        <h3>Panel de Control Consolidado</h3>
-                        <p>Accede a tareas clave del proyecto desde una interfaz unificada en tu terminal, estilo panel de control RPG.</p>
-                    </div>
-                    <div class="feature-item animate-on-scroll">
-                        <h3>Customización a tu Medida</h3>
-                        <p>Configura scripts personalizados y estructuras. Adapta el flujo a tus necesidades únicas de desarrollo.</p>
+                    <div class="feature-item animate-on-scroll"
+                        data-audio-hover="sound_hover_info"
+                        data-info-title="Protocolo de Automatización de Flujo"
+                        data-info-desc="Ejecuta secuencias de comandos predefinidas o personalizadas. Instala dependencias, configura control de versiones (Git), y genera artefactos esenciales (README, Dockerfile)."
+                        data-info-reqs="Requisitos: NPM, Git. Configurabilidad: Scripts de post-creación."
+                        data-info-highlight="Ahorro de Tiempo: 80% menos intervención manual."
+                        >
+                        <h3>Módulo: Orquestación Automatizada</h3>
+                        <p>Desde la instalación de paquetes hasta la inicialización de repositorios, todo automatizado para un arranque impecable.</p>
                     </div>
                 </div>
             </div>
@@ -896,37 +906,45 @@
         <!-- Sección de Demostración de Consola Interactiva -->
         <section id="interactive-console-demo">
             <div class="container">
-                <h2 class="animate-on-scroll">🖥️ Vive la Experiencia CLI</h2>
+                <h2 class="animate-on-scroll">🖥️ Simulación de Campo de Operaciones</h2>
                 <p class="text-center animate-on-scroll" style="margin-bottom: 50px;">
-                    Explora cómo Immortal IA Dev CLI transforma tu flujo de trabajo. <br>
-                    Haz clic en los comandos o escribe en la consola de abajo:
+                    Observa el Immortal IA Dev CLI en acción. Haz clic en los comandos de despliegue preestablecidos o ingresa tus propias órdenes.
                 </p>
 
                 <div class="console-container animate-on-scroll">
                     <div class="console-header">
-                        <span>immortal-ia-dev-cli@web-console:~$</span>
+                        <span>IMMORTAL-AI-OPS-CENTER://MAIN-CONSOLE $</span>
                         <div class="window-controls">
-                            <span style="background-color: #ff5f56;"></span>
-                            <span style="background-color: #ffbd2e;"></span>
-                            <span style="background-color: #27c93f;"></span>
+                            <span style="background-color: #ff6b6b;"></span>
+                            <span style="background-color: #ffd166;"></span>
+                            <span style="background-color: #4CAF50;"></span>
                         </div>
                     </div>
                     <div class="console-output" id="consoleOutput">
-                        <span class="prompt">$</span> <span class="output-line"></span><br>
+                        <span class="output-line command-prefix">$</span> <span class="output-line prompt-cursor"><span class="cursor"></span></span><br>
                     </div>
                     <div class="console-input-area">
-                        <span class="console-input-prefix">immortal-ia-dev~$</span>
-                        <input type="text" id="consoleInput" class="console-input" autofocus autocomplete="off">
+                        <span class="console-input-prefix">IMMORTAL-AI-OPS-CENTER ~$</span>
+                        <input type="text" id="consoleInput" class="console-input" autofocus autocomplete="off"
+                            data-audio-keydown="sound_keypress"
+                            data-audio-enter="sound_command_enter"
+                            >
                     </div>
                 </div>
 
                 <div class="command-buttons animate-on-scroll">
-                    <button class="command-btn" data-command="immortal-ia-dev create web my-new-web-app">Crear Proyecto Web Básico</button>
-                    <button class="command-btn" data-command="immortal-ia-dev create react-vite my-react-app --ts">Crear App React + Vite (TS)</button>
-                    <button class="command-btn" data-command="immortal-ia-dev ai-driven 'full-stack app with React, Node.js, and MongoDB for a social network.'">Generar con IA (App Full-Stack)</button>
-                    <button class="command-btn" data-command="npm install express axios nodemon">Instalar Paquetes Comunes</button>
-                    <button class="command-btn" data-command="help">Mostrar Ayuda</button>
-                    <button class="command-btn" data-command="clear" id="clearConsoleBtn">Limpiar Consola</button>
+                    <button class="command-btn" data-command="immortal-ia-dev deploy web frontend-omega"
+                            data-audio-click="sound_action_click" data-audio-hover="sound_hover_button">Despliegue Frontend Omega</button>
+                    <button class="command-btn" data-command="immortal-ia-dev deploy react-node-hybrid project-titan"
+                            data-audio-click="sound_action_click" data-audio-hover="sound_hover_button">Despliegue Híbrido Titan</button>
+                    <button class="command-btn" data-command="immortal-ia-dev initiate ai-analysis 'blockchain ledger for secure data transfer'"
+                            data-audio-click="sound_action_click" data-audio-hover="sound_hover_button">Iniciación IA (Blockchain)</button>
+                    <button class="command-btn" data-command="npm install @nestjs/core typeorm express"
+                            data-audio-click="sound_action_click" data-audio-hover="sound_hover_button">Inyección de Paquetes Base</button>
+                    <button class="command-btn" data-command="help"
+                            data-audio-click="sound_action_click" data-audio-hover="sound_hover_button">Consulta de Protocolo</button>
+                    <button class="command-btn" data-command="clear" id="clearConsoleBtn"
+                            data-audio-click="sound_action_clear" data-audio-hover="sound_hover_button">Purga de Datos</button>
                 </div>
             </div>
         </section>
@@ -935,26 +953,26 @@
         <!-- Sección Cómo Empezar -->
         <section id="how-to-use">
             <div class="container">
-                <h2 class="animate-on-scroll">🚀 Cómo Empezar</h2>
-                <div class="terminal-block animate-on-scroll">
-                    <h3>Paso 1: Adquiere tu Herramienta</h3>
-                    <p>Asegúrate de tener Node.js instalado. Luego, clona el repositorio o descarga el código fuente y navega al directorio del proyecto:</p>
-                    <pre><code>$ git clone https://github.com/your-user/immortal-ia-dev-cli.git
+                <h2 class="animate-on-scroll">🚀 Fases de Activación</h2>
+                <div class="data-block animate-on-scroll">
+                    <h3>Fase 1: Recopilación de Componentes Base</h3>
+                    <p>Accede a los archivos operativos del Immortal IA Dev CLI. Asegúrate de tener Node.js instalado (Versión estable recomendada: v18+).</p>
+                    <pre><code data-audio-copy="sound_copy_code">$ git clone https://github.com/your-user/immortal-ia-dev-cli.git
 $ cd immortal-ia-dev-cli
-$ npm install</code></pre>
-                    <p>Esto instalará todas las dependencias necesarias para que el CLI funcione.</p>
+$ npm install --force</code></pre>
+                    <p>El comando <code>--force</code> asegura la resolución de dependencias, crucial para el correcto despliegue.</p>
                 </div>
-                <div class="terminal-block animate-on-scroll">
-                    <h3>Paso 2: Conecta la Inteligencia</h3>
-                    <p>Para desatar el poder de la IA, necesitarás una API Key de Google Gemini (o OpenAI GPT). Crea un archivo <code>.env</code> en la raíz del proyecto y añade tu clave:</p>
-                    <pre><code>GOOGLE_API_KEY="TU_API_KEY_DE_GEMINI_AQUI"</code></pre>
-                    <p>Registra tu clave de API en <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a>.</p>
+                <div class="data-block animate-on-scroll">
+                    <h3>Fase 2: Conexión Neural de IA</h3>
+                    <p>Para la integración con el Motor Cognitivo IA, se requiere un Identificador de Acceso. Crea un archivo <code>.env</code> en la raíz del directorio de operación:</p>
+                    <pre><code data-audio-copy="sound_copy_code">GOOGLE_API_KEY="TU_API_KEY_DE_GEMINI_AQUI"</code></pre>
+                    <p>Obtén tu Identificador de Acceso en <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a>. Se recomienda un monitoreo de uso.</p>
                 </div>
-                <div class="terminal-block animate-on-scroll">
-                    <h3>Paso 3: ¡Ejecuta el Inmortal!</h3>
-                    <p>Con todo configurado, lanza el CLI desde tu terminal. El menú interactivo te guiará por todas las opciones:</p>
-                    <pre><code>$ npm start</code></pre>
-                    <p>¡Felicidades, estás listo para crear proyectos a la velocidad de la luz!</p>
+                <div class="data-block animate-on-scroll">
+                    <h3>Fase 3: Iniciación del Protocolo Principal</h3>
+                    <p>Con los componentes base y la conexión IA establecida, lanza el CLI para iniciar la interfaz de operaciones:</p>
+                    <pre><code data-audio-copy="sound_copy_code">$ npm start</code></pre>
+                    <p>La interfaz te proporcionará un menú táctico para seleccionar tu primera operación de desarrollo. Prepárate para una eficiencia sin precedentes.</p>
                 </div>
             </div>
         </section>
@@ -963,19 +981,33 @@ $ npm install</code></pre>
     <!-- Footer -->
     <footer id="footer">
         <div class="container">
-            <p>© 2024 Immortal IA Dev. Todos los derechos reservados. <br> Diseñado para desarrolladores, por desarrolladores... ¡y un poco de magia IA!</p>
-            <p>Contacto: <a href="mailto:info@immortaliadev.com">info@immortaliadev.com</a></p>
+            <p>© 2024 Immortal IA Dev - Todos los derechos reservados. <br> Unidad de Despliegue de Software Táctico v1.0.0</p>
+            <p>Soporte Táctico: <a href="mailto:support@immortaliadev.com" data-audio-click="sound_navigate">support@immortaliadev.com</a> |
+               Misiones de Código: <a href="https://github.com/your-repo-link" target="_blank" rel="noopener noreferrer" data-audio-click="sound_navigate">GitHub/ImmortalIA</a></p>
         </div>
     </footer>
 
+    <!-- Floating Holographic Info Overlay -->
+    <div id="infoOverlay">
+        <div class="overlay-header" id="overlayTitle"></div>
+        <div class="overlay-content">
+            <p id="overlayDesc"></p>
+            <strong>Requisitos de Sistema:</strong>
+            <p id="overlayReqs"></p>
+            <strong>Estado y Datos Clave:</strong>
+            <p id="overlayHighlight"></p>
+        </div>
+    </div>
+
+
     <!--
     * =======================================
-    *       JAVASCRIPT PARA ANIMACIONES E INTERACTIVIDAD
+    *       JAVASCRIPT: Comportamientos y Sonidos
     * =======================================
     -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // DOM Elements
+            // ========================= ELEMENTOS DOM =========================
             const navLinks = document.querySelectorAll('.nav-link');
             const menuToggle = document.querySelector('.menu-toggle');
             const mobileMenu = document.querySelector('.mobile-menu');
@@ -986,40 +1018,80 @@ $ npm install</code></pre>
             const consoleInput = document.getElementById('consoleInput');
             const commandButtons = document.querySelectorAll('.command-btn');
             const clearConsoleBtn = document.getElementById('clearConsoleBtn');
+            const featureItems = document.querySelectorAll('.feature-item');
+            const dataBlocks = document.querySelectorAll('.data-block pre code'); // For code copying
+            const infoOverlay = document.getElementById('infoOverlay');
+            const overlayTitle = document.getElementById('overlayTitle');
+            const overlayDesc = document.getElementById('overlayDesc');
+            const overlayReqs = document.getElementById('overlayReqs');
+            const overlayHighlight = document.getElementById('overlayHighlight');
+
+            // ========================= RUTAS DE AUDIO (AJUSTA ESTO) =========================
+            const audioPath = 'audio/'; // Carpeta donde guardarás tus MP3
+            const sounds = {
+                'sound_hover_subtle': new Audio(`${audioPath}hover_subtle.mp3`),
+                'sound_hover_button': new Audio(`${audioPath}hover_button.mp3`),
+                'sound_hover_info': new Audio(`${audioPath}hover_info.mp3`),
+                'sound_click_subtle': new Audio(`${audioPath}click_subtle.mp3`),
+                'sound_action_click': new Audio(`${audioPath}action_click.mp3`),
+                'sound_action_confirm': new Audio(`${audioPath}action_confirm.mp3`),
+                'sound_action_clear': new Audio(`${audioPath}action_clear.mp3`),
+                'sound_navigate': new Audio(`${audioPath}navigate.mp3`),
+                'sound_menu_toggle': new Audio(`${audioPath}menu_toggle.mp3`),
+                'sound_keypress': new Audio(`${audioPath}keypress.mp3`), // Puedes usar varios y rotarlos
+                'sound_command_enter': new Audio(`${audioPath}command_enter.mp3`),
+                'sound_typing_data': new Audio(`${audioPath}typing_data.mp3`),
+                'sound_hologram_on': new Audio(`${audioPath}hologram_on.mp3`),
+                'sound_hologram_off': new Audio(`${audioPath}hologram_off.mp3`),
+                'sound_copy_code': new Audio(`${audioPath}copy_code.mp3`),
+                'sound_error_alert': new Audio(`${audioPath}error_alert.mp3`)
+            };
+
+            // Precarga los sonidos (opcional, pero mejora la UX)
+            for (const key in sounds) {
+                sounds[key].load();
+            }
+
+            function playSound(key) {
+                if (sounds[key]) {
+                    sounds[key].currentTime = 0; // Reinicia el sonido si ya se está reproduciendo
+                    sounds[key].play().catch(e => console.error("Error al reproducir el sonido:", e));
+                }
+            }
 
 
-            // --- General Helpers ---
+            // ========================= UTILIDADES =========================
             const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-            // --- Scroll Animation (IntersectionObserver) ---
+
+            // ========================= SCROLL ANIMATION (IntersectionObserver) =========================
             const observerOptions = {
                 root: null, // viewport
                 rootMargin: '0px',
-                threshold: 0.1 // 10% of element visible
+                threshold: 0.15 // 15% del elemento visible para activar
             };
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        // No unobserve for continuous parallax or re-animation if needed,
-                        // but for single reveal, keeping it is fine.
-                        // observer.unobserve(entry.target); 
+                        // Puedes descomentar para animar solo una vez
+                        // observer.unobserve(entry.target);
                     } else {
-                        // Optional: remove is-visible class if you want elements to animate back out
+                        // Opcional: Para animar de nuevo al salir de la vista
                         // entry.target.classList.remove('is-visible');
                     }
                 });
             }, observerOptions);
 
-            // Observe elements on load
             animateOnScrollElements.forEach(el => observer.observe(el));
 
 
-            // --- Pixel Trail Cursor Animation ---
+            // ========================= PIXEL TRAIL CURSOR =========================
             let lastX = 0;
             let lastY = 0;
-            const pixelInterval = 10; // Generate a pixel every X pixels of movement
+            const pixelInterval = 10;
+            const interactiveElements = document.querySelectorAll('a, button, input, .feature-item, .command-btn, .logo');
 
             document.addEventListener('mousemove', (e) => {
                 const dx = Math.abs(e.clientX - lastX);
@@ -1032,18 +1104,32 @@ $ npm install</code></pre>
                     pixel.style.top = `${e.clientY - (parseInt(getComputedStyle(body).getPropertyValue('--pixel-size')) / 2)}px`;
                     body.appendChild(pixel);
 
-                    setTimeout(() => pixel.remove(), 800); // Matches fade-out-pixel animation duration
+                    setTimeout(() => pixel.remove(), 800);
                     lastX = e.clientX;
                     lastY = e.clientY;
+                }
+
+                // Check if hovering over an interactive element for pixel color change
+                let isHoveringInteractive = false;
+                for (const el of interactiveElements) {
+                    if (el.contains(e.target)) {
+                        isHoveringInteractive = true;
+                        break;
+                    }
+                }
+                if (isHoveringInteractive) {
+                    body.classList.add('hovering-interactive');
+                } else {
+                    body.classList.remove('hovering-interactive');
                 }
             });
 
 
-            // --- Smooth Scroll & Active Nav Link ---
+            // ========================= SMOOTH SCROLL & ACTIVE NAV LINK =========================
             const updateActiveNavLink = () => {
                 let currentActiveSectionId = 'hero';
                 const navbarHeight = navbar ? navbar.offsetHeight : 0;
-                const scrollOffset = window.scrollY + navbarHeight + 1; // +1 to ensure it ticks over section boundaries
+                const scrollOffset = window.scrollY + navbarHeight + 50; // Extra offset for visual appeal
 
                 document.querySelectorAll('section, header').forEach(element => {
                     if (element.offsetTop <= scrollOffset && element.offsetTop + element.offsetHeight > scrollOffset) {
@@ -1061,6 +1147,7 @@ $ npm install</code></pre>
 
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
+                    playSound(e.currentTarget.dataset.audioClick);
                     e.preventDefault();
                     const targetId = link.getAttribute('href').substring(1);
                     const targetSection = document.getElementById(targetId);
@@ -1070,26 +1157,22 @@ $ npm install</code></pre>
                             top: targetSection.offsetTop - (navbar ? navbar.offsetHeight : 0),
                             behavior: 'smooth'
                         });
-
-                        // Close mobile menu if open
-                        if (mobileMenu.classList.contains('open')) {
-                            mobileMenu.classList.remove('open');
-                            menuToggle.classList.remove('open');
-                        }
+                        mobileMenu.classList.remove('open');
+                        menuToggle.classList.remove('open');
                     }
                 });
             });
 
             window.addEventListener('scroll', updateActiveNavLink);
-            updateActiveNavLink(); // Set active class on load
+            updateActiveNavLink();
 
-            // --- Mobile Menu Toggle ---
-            menuToggle.addEventListener('click', () => {
+            // ========================= MOBILE MENU TOGGLE =========================
+            menuToggle.addEventListener('click', (e) => {
+                playSound(e.currentTarget.dataset.audioClick);
                 mobileMenu.classList.toggle('open');
                 menuToggle.classList.toggle('open');
             });
 
-            // Close mobile menu on click outside
             document.addEventListener('click', (e) => {
                 if (navbar && !navbar.contains(e.target) && mobileMenu.classList.contains('open')) {
                     mobileMenu.classList.remove('open');
@@ -1097,184 +1180,312 @@ $ npm install</code></pre>
                 }
             });
 
-            // --- Interactive Console Demo Logic ---
+
+            // ========================= INTERACTIVE CONSOLE DEMO =========================
             const consoleCommands = {
-                "immortal-ia-dev create web my-new-web-app": [
-                    "🚀 Generando proyecto web básico 'my-new-web-app'...",
-                    "Creando directorio: /home/user/my-new-web-app",
-                    "Copiando index.html...",
-                    "Copiando style.css...",
-                    "Copiando script.js...",
-                    "✅ Proyecto 'my-new-web-app' creado exitosamente.",
-                    "Instrucciones: cd my-new-web-app && npx http-server (o similar)"
+                "immortal-ia-dev deploy web frontend-omega": [
+                    "// Iniciando despliegue de componente web 'frontend-omega'...",
+                    chalk('yellow', '>> Protocolo de inicio: Web Básico (HTML/CSS/JS)'),
+                    "Creando directorio operativo: C:\\immortal-dev-ops\\frontend-omega",
+                    "Copilando index.html (30%)...",
+                    "Copilando style.css (60%)...",
+                    "Copilando script.js (90%)...",
+                    chalk('green', "Estado: 100% OK. Módulo 'frontend-omega' listo para pruebas locales."),
+                    chalk('blue', "Acción sugerida: Iniciar servidor local (npx http-server) en directorio de despliegue.")
                 ],
-                "immortal-ia-dev create react-vite my-react-app --ts": [
-                    "🚀 Iniciando creación de app React con Vite (TypeScript) 'my-react-app'...",
-                    "Ejecutando: npm create vite@latest my-react-app -- --template react-ts",
-                    "npm create vite@latest output:\n  Scaffolding project in /home/user/my-react-app...",
-                    "  Done. Now run:",
-                    "    cd my-react-app",
-                    "    npm install",
-                    "    npm run dev",
-                    "✅ Aplicación React con Vite creada.",
-                    "Instrucciones: cd my-react-app && npm install && npm run dev"
+                "immortal-ia-dev deploy react-node-hybrid project-titan": [
+                    "// Lanzando arquitectura híbrida 'project-titan' (React + Node.js)...",
+                    chalk('cyan', '>> Configuración: React (Vite, TS) / Node.js (Express, TypeORM)'),
+                    "Desplegando esqueleto de proyecto 'project-titan'...",
+                    "Creando package.json (Front/Backend)...",
+                    "Generando src/frontend/ (React App)...",
+                    "Generando src/backend/ (Node.js API)...",
+                    "Inicializando módulos ORM (TypeORM) y router (Express)...",
+                    chalk('yellow', "Asignación de dependencias (npm install): Espere. Esto puede tomar tiempo..."),
+                    "... [20s Simulated Install]",
+                    chalk('green', "Estado: Dependencias instaladas. Proyecto 'project-titan' activado."),
+                    chalk('blue', "Acciones: cd project-titan/src/backend && npm start ; cd ../frontend && npm run dev")
                 ],
-                "immortal-ia-dev ai-driven 'full-stack app with React, Node.js, and MongoDB for a social network.'": [
-                    "🧠 Modo Generación con IA (Gemini) 🤖",
-                    "Analizando descripción: 'full-stack app with React, Node.js, and MongoDB for a social network.'",
-                    "Consultando a Gemini para generar estructura y código...",
-                    "⏳ Esto puede tardar un momento...",
-                    "✅ Gemini ha generado la estructura del proyecto 'social-network-app'.",
-                    "Creando directorio: /home/user/social-network-app",
-                    "Creando package.json...",
-                    "Creando src/server.js (Node.js/Express)...",
-                    "Creando src/client/App.js (React)...",
-                    "Creando public/index.html...",
-                    "Creando Dockerfile...",
-                    "Creando README.md...",
-                    "Instalando dependencias (npm install)..",
-                    "Dependencias instaladas. 🎉",
-                    "✅ Proyecto 'social-network-app' generado por IA exitosamente.",
-                    "Instrucciones:",
-                    "1. cd social-network-app",
-                    "2. npm start (para el backend) y cd src/client && npm run dev (para el frontend)",
-                    "3. Asegúrate de tener MongoDB ejecutándose."
+                "immortal-ia-dev initiate ai-analysis 'blockchain ledger for secure data transfer'": [
+                    "// Solicitud de iniciación de análisis de IA para: 'blockchain ledger for secure data transfer'",
+                    chalk('purple', '>> Conectando a Gemini AI Core... (Auth Token: [***********])'),
+                    "Procesando prompt: 'Genera estructura y código para ledger blockchain.'",
+                    chalk('yellow', "Análisis profundo iniciado. Evaluando requerimientos técnicos y arquitecturas óptimas..."),
+                    "... [30s Simulated AI Processing]",
+                    chalk('cyan', "Análisis de IA completo. Resultados:"),
+                    "- Arquitectura de 3 capas: Frontend (React), Backend (GoLang/Fiber), DB (PostgreSQL).",
+                    "- Componentes: Smart contracts (Solidity), P2P network layer.",
+                    "- Generación de Dockerfile para orquestación de servicios.",
+                    chalk('green', "Estado: Módulo AI-driven 'blockchain-ledger-sys' preparado para despliegue."),
+                    chalk('blue', "Sugerencia: Revisar los archivos generados. El código base contiene stubs funcionales.")
                 ],
-                "npm install express axios nodemon": [
-                    "🚀 Instalando paquetes: express axios nodemon...",
-                    "+ express@4.18.2",
-                    "+ axios@1.6.8",
-                    "+ nodemon@3.1.0",
-                    "added 3 packages, and audited 1000 packages in 5s",
-                    "134 packages are looking for funding",
-                    "  run `npm fund` for details",
-                    "found 0 vulnerabilities",
-                    "✅ Paquetes instalados exitosamente."
+                "npm install @nestjs/core typeorm express": [
+                    "// Inyectando paquetes básicos: @nestjs/core typeorm express...",
+                    chalk('yellow', "Localizando paquetes en registro npm..."),
+                    chalk('green', "+ @nestjs/core@10.x"),
+                    chalk('green', "+ typeorm@0.3.x"),
+                    chalk('green', "+ express@4.x"),
+                    chalk('cyan', "Estado: Dependencias adicionales agregadas. Configuración de módulos actualizada."),
+                    "Fondos para desarrollo: 254 proyectos con necesidad de financiación. (npm fund)",
+                    chalk('green', "Análisis de vulnerabilidades: 0 vulnerabilidades detectadas."),
+                    chalk('blue', "Acción sugerida: Ejecutar test de integridad (npm test --coverage)")
                 ],
                 "help": [
-                    "IMMORTAL IA DEV CLI Ayuda:",
-                    "- 'immortal-ia-dev create <type> <name>': Crea un nuevo proyecto (web, node, react-vite).",
-                    "- 'immortal-ia-dev ai-driven '<description>'': Deja que la IA genere un proyecto desde una descripción.",
-                    "- 'npm install <packages>': Instala paquetes de Node.js.",
-                    "- 'clear': Limpia la consola de demostración.",
-                    "Para más detalles, consulta la documentación completa en nuestro GitHub."
+                    chalk('orange', "PROTOCOLO DE AYUDA IMMORTAL IA DEV CLI:"),
+                    chalk('cyan', "- deploy <tipo> <nombre> [opciones]:"),
+                    "  -> tipo: 'web' (HTML/CSS/JS), 'react-node-hybrid' (React+Node), 'node-express'.",
+                    "  -> opciones: '--ts' (TypeScript para React/Node).",
+                    chalk('cyan', "- initiate ai-analysis '<descripción_proyecto>':"),
+                    "  -> Utiliza el motor IA para generar estructuras y código basados en tu descripción.",
+                    chalk('cyan', "- npm install <paquetes>:"),
+                    "  -> Realiza la instalación de dependencias en el directorio activo.",
+                    chalk('cyan', "- clear:"),
+                    "  -> Purga el historial de la consola de demostración.",
+                    chalk('text-muted', "Para más detalles, consulta la documentación oficial en nuestro GitHub. Misión: Eficiencia Absoluta.")
                 ]
             };
 
-            const typeSpeed = 20; // Typing speed for console output (ms per character)
-            const lineDelayMs = 400; // Delay between lines of output
+            // Custom chalk function for browser (simulates Node.js chalk)
+            function chalk(color, text) {
+                const styles = {
+                    'green': 'color: var(--color-accent-green); text-shadow: 0 0 3px rgba(0,230,118,0.5);',
+                    'cyan': 'color: var(--color-accent-blue); text-shadow: 0 0 3px rgba(0,188,212,0.5);',
+                    'blue': 'color: #87CEEB; text-shadow: 0 0 2px #87CEEB;', // A bit lighter blue for info
+                    'yellow': 'color: var(--color-accent-orange); text-shadow: 0 0 3px rgba(255,171,0,0.5);',
+                    'purple': 'color: var(--color-accent-purple); text-shadow: 0 0 3px rgba(123,31,162,0.5);',
+                    'red': 'color: #FF6B6B; text-shadow: 0 0 3px #FF6B6B;',
+                    'text-muted': 'color: var(--color-text-muted); opacity: 0.8;'
+                };
+                return `<span style="${styles[color] || ''}">${text}</span>`;
+            }
+
+            const typeSpeed = 20; // ms per character
+            const lineDelayMs = 500; // Delay between lines of output
 
             async function typeOutput(outputElement, text) {
+                // Ensure outputElement is valid and has innerHTML property
+                if (!outputElement || !('innerHTML' in outputElement)) {
+                    console.error("Invalid outputElement provided to typeOutput:", outputElement);
+                    return;
+                }
                 for (let i = 0; i < text.length; i++) {
                     outputElement.innerHTML += text.charAt(i);
-                    outputElement.scrollTop = outputElement.scrollHeight; // Scroll to bottom
+                    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                    playSound('sound_typing_data'); // Play typing sound for each char
                     await sleep(typeSpeed);
                 }
             }
 
             async function runConsoleCommand(command) {
                 consoleInput.value = ''; // Clear input if it was typed
-                const promptElement = document.createElement('span');
-                promptElement.classList.add('prompt');
-                promptElement.textContent = '$ ';
-                consoleOutput.appendChild(promptElement);
+                const commandPromptPrefix = consoleOutput.querySelector('.prompt-cursor');
+                if (commandPromptPrefix) {
+                    commandPromptPrefix.innerHTML = ''; // Remove cursor from previous line
+                    commandPromptPrefix.classList.remove('prompt-cursor'); // Remove this class
+                }
 
-                const commandLine = document.createElement('span');
-                commandLine.classList.add('command-line');
-                commandOutputSpan = document.createElement('span'); // Span for current line output
-                commandLine.appendChild(commandOutputSpan);
-                consoleOutput.appendChild(commandLine);
-                
-                await typeOutput(commandOutputSpan, command);
+                // Append the actual command line that was "executed"
+                const newLine = document.createElement('div');
+                newLine.classList.add('output-line-wrapper'); // Wrapper for the command line + prompt
+                newLine.innerHTML = `<span class="command-prefix">$</span> <span class="output-line command-entered"></span>`;
+                consoleOutput.appendChild(newLine);
+                const commandEnteredSpan = newLine.querySelector('.command-entered');
+
+                await typeOutput(commandEnteredSpan, command);
                 await sleep(lineDelayMs);
 
-                // Add new line for the output below the command
-                consoleOutput.appendChild(document.createElement('br'));
-
-                const outputs = consoleCommands[command] || ["Comando no reconocido. Prueba 'help'."];
+                const outputs = consoleCommands[command] || [chalk('red', `Error: Comando no reconocido: '${command}'. Prueba 'help'.`)];
 
                 for (const line of outputs) {
-                    const outputLineSpan = document.createElement('span');
+                    const outputLineSpan = document.createElement('div');
                     outputLineSpan.classList.add('output-line');
                     consoleOutput.appendChild(outputLineSpan);
                     await typeOutput(outputLineSpan, line);
-                    consoleOutput.appendChild(document.createElement('br'));
                     await sleep(lineDelayMs);
                 }
-                
-                // Add the trailing empty prompt
-                const trailingPromptElement = document.createElement('span');
-                trailingPromptElement.classList.add('prompt');
-                trailingPromptElement.innerHTML = 'immortal-ia-dev~$ <span class="cursor"></span>';
-                consoleOutput.appendChild(trailingPromptElement);
-                consoleOutput.scrollTop = consoleOutput.scrollHeight; // Ensure it's scrolled to the very bottom
 
-                consoleInput.focus(); // Re-focus the input after command runs
+                // Add new prompt line with cursor
+                const newPromptLine = document.createElement('div');
+                newPromptLine.innerHTML = `<span class="output-line command-prefix">IMMORTAL-AI-OPS-CENTER ~$</span> <span class="output-line prompt-cursor"><span class="cursor"></span></span>`;
+                consoleOutput.appendChild(newPromptLine);
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+
+                consoleInput.focus();
             }
 
             function clearConsole() {
-                consoleOutput.innerHTML = ''; // Clear all content
-                const initialPrompt = document.createElement('span');
-                initialPrompt.classList.add('prompt');
-                initialPrompt.innerHTML = 'immortal-ia-dev~$ <span class="cursor"></span>';
-                consoleOutput.appendChild(initialPrompt);
+                consoleOutput.innerHTML = '';
+                const initialPromptLine = document.createElement('div');
+                initialPromptLine.innerHTML = `<span class="output-line command-prefix">IMMORTAL-AI-OPS-CENTER ~$</span> <span class="output-line prompt-cursor"><span class="cursor"></span></span>`;
+                consoleOutput.appendChild(initialPromptLine);
                 consoleInput.focus();
             }
 
             // Event Listeners for console
             commandButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const command = button.dataset.command;
+                button.addEventListener('click', (e) => {
+                    const command = e.currentTarget.dataset.command;
                     if (command === 'clear') {
+                        playSound(e.currentTarget.dataset.audioClick);
                         clearConsole();
                     } else {
+                        playSound(e.currentTarget.dataset.audioClick);
                         runConsoleCommand(command);
                     }
                 });
+                button.addEventListener('mouseenter', () => playSound(button.dataset.audioHover));
             });
 
             consoleInput.addEventListener('keypress', (e) => {
+                playSound(e.currentTarget.dataset.audioKeydown); // Play keypress sound
+
                 if (e.key === 'Enter') {
+                    e.preventDefault(); // Prevent newline in input
+                    playSound(e.currentTarget.dataset.audioEnter); // Play enter sound
                     const typedCommand = consoleInput.value.trim();
+
                     if (typedCommand === 'clear') {
                         clearConsole();
                     } else if (consoleCommands[typedCommand]) {
                         runConsoleCommand(typedCommand);
                     } else {
                         // Handle unrecognized commands
-                        const promptElement = document.createElement('span');
-                        promptElement.classList.add('prompt');
-                        promptElement.textContent = '$ ';
-                        consoleOutput.appendChild(promptElement);
-                        
-                        const commandLine = document.createElement('span');
-                        commandLine.classList.add('command-line');
-                        commandLine.textContent = typedCommand;
-                        consoleOutput.appendChild(commandLine);
-                        consoleOutput.appendChild(document.createElement('br')); // New line after typed command
-                        
-                        const outputLineSpan = document.createElement('span');
-                        outputLineSpan.classList.add('output-line');
-                        outputLineSpan.textContent = `Comando no reconocido: '${typedCommand}'. Prueba 'help'.`;
-                        consoleOutput.appendChild(outputLineSpan);
-                        consoleOutput.appendChild(document.createElement('br')); // New line after output
-                        
-                        // Add trailing empty prompt
-                        const trailingPromptElement = document.createElement('span');
-                        trailingPromptElement.classList.add('prompt');
-                        trailingPromptElement.innerHTML = 'immortal-ia-dev~$ <span class="cursor"></span>';
-                        consoleOutput.appendChild(trailingPromptElement);
+                        const currentPromptPrefix = consoleOutput.querySelector('.prompt-cursor');
+                        if (currentPromptPrefix) {
+                            currentPromptPrefix.innerHTML = '';
+                            currentPromptPrefix.classList.remove('prompt-cursor');
+                        }
 
-                        consoleOutput.scrollTop = consoleOutput.scrollHeight; // Scroll to bottom
-                        consoleInput.value = ''; // Clear input
+                        const newLine = document.createElement('div');
+                        newLine.classList.add('output-line-wrapper');
+                        newLine.innerHTML = `<span class="command-prefix">$</span> <span class="output-line command-entered">${typedCommand}</span>`;
+                        consoleOutput.appendChild(newLine);
+
+                        const errorLine = document.createElement('div');
+                        errorLine.classList.add('output-line');
+                        errorLine.innerHTML = chalk('red', `Error: Comando no reconocido: '${typedCommand}'. Prueba 'help'.`);
+                        consoleOutput.appendChild(errorLine);
+                        playSound('sound_error_alert');
+
+                        // Add new prompt line with cursor
+                        const newPromptLine = document.createElement('div');
+                        newPromptLine.innerHTML = `<span class="output-line command-prefix">IMMORTAL-AI-OPS-CENTER ~$</span> <span class="output-line prompt-cursor"><span class="cursor"></span></span>`;
+                        consoleOutput.appendChild(newPromptLine);
+
+                        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                        consoleInput.value = '';
                     }
                 }
             });
 
-            clearConsoleBtn.addEventListener('click', clearConsole);
-
             // Initial console prompt
-            clearConsole(); // To show the initial prompt
+            clearConsole();
+
+
+            // ========================= FLOATING HOLOGRAPHIC OVERLAY (Feature Items) =========================
+            let overlayTimeout;
+            featureItems.forEach(item => {
+                item.addEventListener('mouseenter', (e) => {
+                    playSound(e.currentTarget.dataset.audioHover);
+                    clearTimeout(overlayTimeout);
+
+                    const title = item.dataset.infoTitle;
+                    const desc = item.dataset.infoDesc;
+                    const reqs = item.dataset.infoReqs;
+                    const highlight = item.dataset.infoHighlight;
+
+                    overlayTitle.textContent = title;
+                    overlayDesc.textContent = desc;
+                    overlayReqs.textContent = reqs;
+                    overlayHighlight.textContent = highlight;
+
+                    // Position the overlay relative to the hovered item
+                    const itemRect = item.getBoundingClientRect();
+                    const overlayRect = infoOverlay.getBoundingClientRect();
+
+                    let left = itemRect.right + 20; // 20px to the right of the item
+                    let top = itemRect.top;
+
+                    // Adjust if it goes off screen (right)
+                    if (left + overlayRect.width > window.innerWidth) {
+                        left = itemRect.left - overlayRect.width - 20; // Place to the left
+                        if (left < 0) left = 10; // If still off screen, place far left
+                    }
+
+                    // Adjust if it goes off screen (bottom)
+                    if (top + overlayRect.height > window.innerHeight) {
+                        top = window.innerHeight - overlayRect.height - 10;
+                        if (top < 0) top = 10; // If still off screen, place far top
+                    }
+                    
+                    infoOverlay.style.left = `${left}px`;
+                    infoOverlay.style.top = `${top}px`;
+
+                    infoOverlay.classList.add('show');
+                    playSound('sound_hologram_on');
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    overlayTimeout = setTimeout(() => {
+                        infoOverlay.classList.remove('show');
+                        playSound('sound_hologram_off');
+                    }, 200); // Small delay before disappearing
+                });
+            });
+
+            // Keep overlay visible if mouse re-enters it
+            infoOverlay.addEventListener('mouseenter', () => {
+                clearTimeout(overlayTimeout);
+            });
+            infoOverlay.addEventListener('mouseleave', () => {
+                overlayTimeout = setTimeout(() => {
+                    infoOverlay.classList.remove('show');
+                    playSound('sound_hologram_off');
+                }, 200);
+            });
+
+
+            // ========================= CODE COPY INTERACTIVITY =========================
+            dataBlocks.forEach(codeBlock => {
+                codeBlock.addEventListener('click', async (e) => {
+                    const textToCopy = e.currentTarget.textContent;
+                    try {
+                        await navigator.clipboard.writeText(textToCopy);
+                        playSound('sound_copy_code');
+                        // Optional: Visual feedback like "Copiado!"
+                        const originalText = e.currentTarget.textContent;
+                        e.currentTarget.textContent = "COPIADO AL PORTAPAPELES!";
+                        setTimeout(() => {
+                            e.currentTarget.textContent = originalText;
+                        }, 1500);
+                    } catch (err) {
+                        console.error('No se pudo copiar el texto: ', err);
+                        playSound('sound_error_alert');
+                        // Fallback for older browsers
+                        const tempTextArea = document.createElement('textarea');
+                        tempTextArea.value = textToCopy;
+                        document.body.appendChild(tempTextArea);
+                        tempTextArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(tempTextArea);
+                    }
+                });
+            });
+
+            // ========================= GENERAL HOVER SOUNDS =========================
+            document.querySelectorAll('a, button:not(.command-btn, .menu-toggle), .logo').forEach(el => {
+                if (el.dataset.audioHover && !el.dataset.audioHoverAttached) { // Prevent attaching multiple times
+                    el.addEventListener('mouseenter', () => playSound(el.dataset.audioHover));
+                    el.dataset.audioHoverAttached = true; // Mark as attached
+                }
+            });
+            // Attach click sounds for elements without specific command_btn handling
+            document.querySelectorAll('a:not(.nav-link), .btn').forEach(el => {
+                if (el.dataset.audioClick && !el.dataset.audioClickAttached) {
+                    el.addEventListener('click', () => playSound(el.dataset.audioClick));
+                    el.dataset.audioClickAttached = true;
+                }
+            });
 
         });
     </script>
